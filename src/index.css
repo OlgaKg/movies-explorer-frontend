@@ -1,0 +1,39 @@
+@import url(../src/vendor/normalize.css);
+@import url(../src/vendor/fonts/fonts.css);
+
+@import url(../src/components/App/App.css);
+@import url(../src/components/Header/Header.css);
+@import url(../src/components/Navigation/Navigation.css);
+@import url(../src/components/Promo/Promo.css);
+@import url(../src/components/NavTab/NavTab.css);
+@import url(../src/components/AboutProject/AboutProject.css);
+@import url(../src/components/Techs/Techs.css);
+@import url(../src/components/AboutMe/AboutMe.css);
+@import url(../src/components/Portfolio/Portfolio.css);
+@import url(../src/components/SearchForm/SearchForm.css);
+@import url(../src/components/FilterCheckbox/FilterCheckbox.css);
+@import url(../src/components/MoviesCardList/MoviesCardList.css);
+@import url(../src/components/MoviesCard/MoviesCard.css);
+@import url(../src/components/Footer/Footer.css);
+@import url(../src/components/Register/Register.css);
+@import url(../src/components/Login/Login.css);
+@import url(../src/components/PageNotFound/PageNotFound.css);
+@import url(../src/components/Profile/Profile.css);
+
+body {
+  background-color: #fff;
+  color: #000;
+  margin: 0 auto;
+  min-width: 320px;
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

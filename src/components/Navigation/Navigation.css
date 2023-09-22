@@ -1,0 +1,111 @@
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation__link {
+    color: #000;
+    text-align: right;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    text-decoration: none;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.active-link {
+    font-weight: 500;
+}
+
+.navigation__link_account {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    line-height: 16px;
+    margin-left: 50px;
+}
+
+.navigation__account-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 13px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width:768px) {
+    .navigation {
+        display: block;
+        align-items: center;
+        position: fixed;
+        padding-top: 135px;
+        top: 0;
+        right: 520px;
+        height: 100%;
+        width: 520px;
+        background-color: #fff;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navigation.open {
+        transform: translateX(0);
+    }
+
+    .navigation__link {
+        display: block;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 27px 0 5px;
+        margin: 0;
+        text-align: center;
+    }
+
+    .active-link {
+        display: inline-block;
+        padding-bottom: 4px;
+        border-bottom: 2px solid;
+    }
+
+    .active-link:last-child {
+        border-bottom: none
+    }
+
+    .navigation__link_account {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-top: 589px
+    }
+}
+
+@media screen and (max-width:320px) {
+    .navigation {
+        display: block;
+        align-items: center;
+        position: fixed;
+        padding-top: 122px;
+        top: 0;
+        right: 320px;
+        height: 100%;
+        width: 320px;
+        background-color: #fff;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navigation__link {
+        padding: 24px 0 6px;
+    }
+
+    .navigation__link_account {
+        margin-top: 410px
+    }
+}
