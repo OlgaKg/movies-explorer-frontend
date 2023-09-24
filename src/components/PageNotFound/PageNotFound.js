@@ -9,12 +9,12 @@ function PageNotFound() {
     };
 
     return (
-        <div className='notFound'>
-            <div className='notFound__container'>
-                <h2 className='notFound__title'>404</h2>
-                <p className='notFound__text'>Страница не найдена</p>
+        <div className='not-found'>
+            <div className='not-found__container'>
+                <h1 className='not-found__title'>404</h1>
+                <p className='not-found__text'>Страница не найдена</p>
             </div>
-            <button className='notFound__backBtn' onClick={handleGoBack}>Назад</button>
+            <button className='not-found__backBtn' onClick={handleGoBack}>Назад</button>
         </div>
     );
 }

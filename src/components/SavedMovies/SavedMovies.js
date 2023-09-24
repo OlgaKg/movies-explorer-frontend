@@ -7,12 +7,14 @@ function SavedMovies() {
   const { savedMovies, removeMovieFromSaved } = useSavedMovies();
 
   return (
-    <div className='savedMovies'>
-      <SearchForm />
-      <div className='moviesCardList'>
-      {savedMovies.map((movie) => (
-        <MoviesCard key={movie.id} movie={movie} isSavedPage={true} />
-      ))}
+    <div className='saved-movies'>
+      <div className='saved-movies__content'>
+        <SearchForm />
+        <div className='movies-card-list__content'>
+          {savedMovies.map((movie) => (
+            <MoviesCard key={movie.id} movie={movie} isSavedPage={true} />
+          ))}
+        </div>
       </div>
     </div>
   );

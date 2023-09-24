@@ -3,6 +3,7 @@
 
 @import url(../src/components/App/App.css);
 @import url(../src/components/Header/Header.css);
+@import url(../src/components/Main/Main.css);
 @import url(../src/components/Navigation/Navigation.css);
 @import url(../src/components/Promo/Promo.css);
 @import url(../src/components/NavTab/NavTab.css);
@@ -14,6 +15,7 @@
 @import url(../src/components/FilterCheckbox/FilterCheckbox.css);
 @import url(../src/components/MoviesCardList/MoviesCardList.css);
 @import url(../src/components/MoviesCard/MoviesCard.css);
+@import url(../src/components/SavedMovies/SavedMovies.css);
 @import url(../src/components/Footer/Footer.css);
 @import url(../src/components/Register/Register.css);
 @import url(../src/components/Login/Login.css);
@@ -21,10 +23,12 @@
 @import url(../src/components/Profile/Profile.css);
 
 body {
+  min-height: 100vh;
+  display: flex;
   background-color: #fff;
   color: #000;
   margin: 0 auto;
-  min-width: 320px;
+  flex-direction: column;
   font-family: 'Inter', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

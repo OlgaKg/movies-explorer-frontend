@@ -1,3 +1,12 @@
+.profile {
+    width: 100%;
+}
+
+.profile__container {
+    margin: 0 auto;
+    max-width: 396px;
+}
+
 .profile__title {
     margin: 74px auto 123px;
     text-align: center;
@@ -31,16 +40,25 @@
 
 .profile__form-value {
     font-weight: 400;
+    cursor: default;
 }
 
 .profile__form-input {
     border: none;
     text-align: right;
     padding: 0;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.1s ease-in-out;
+    width: 90%;
+}
+
+.profile__form-input:hover {
+    border-bottom: 1px solid #3456F3;
 }
 
 .profile__form-input:focus {
     outline: none;
+    border-bottom: 1px solid transparent;
 }
 
 .profile__buttons {
@@ -61,11 +79,11 @@
     border: none;
     margin-bottom: 16px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .profile__edit-button:hover {
-    opacity: 0.8;
+    opacity: .8;
 }
 
 .profile__logout-button {
@@ -75,11 +93,11 @@
     font-weight: 500;
     margin-bottom: 50px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .profile__logout-button:hover {
-    opacity: 0.8;
+    opacity: .8;
 }
 
 .profile__save-button {
@@ -91,11 +109,11 @@
     font-weight: 500;
     padding: 13px 168px 15px 167px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .profile__save-button:hover {
-    opacity: 0.8;
+    opacity: .8;
 }
 
 .profile__save-button[disabled] {
@@ -117,6 +135,7 @@
     .profile__title {
         margin: 236px auto 96px;
     }
+
     .profile__buttons {
         margin: 211px auto 269px;
     }
@@ -126,7 +145,13 @@
     .profile__title {
         margin: 70px auto 80px;
     }
+
     .profile__buttons {
         margin: 379px auto 40px;
+        font-size: 12px;
+    }
+
+    .profile__form {
+        max-width: 260px;
     }
 }

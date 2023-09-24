@@ -21,15 +21,16 @@ function SearchForm() {
 
     return (
         <form className='search-form'>
-            <div className='search-fotm__container'>
+            <div className='search-form__container'>
                 <div className='search-form__input'>
                     <img className='search-form__search-icon' src={magnifier} alt='иконка лупы' />
                     <input
+                        className='search-form__search-input'
                         type='text'
                         placeholder='Фильм'
-                        //   value={searchQuery}
-                        //   onChange={handleSearchChange}
-                        className='search-form__search-input'
+                        name='searchFilm'
+                    //   value={searchQuery}
+                    //   onChange={handleSearchChange}
                     />
                 </div>
                 <button type='submit' className='search-form__button'>

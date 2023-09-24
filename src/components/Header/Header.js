@@ -10,13 +10,17 @@ function Header({ loggedIn }) {
 
     let currentPage = location.pathname.split('/')[1];
     let isAuthPage = currentPage === 'signin' || currentPage === 'signup';
+
     const isHomePage = location.pathname === '/';
+    const showBurgerMenu = loggedIn && isMobile;
+    const showNavigation = loggedIn && !isAuthPage && !['/signin', '/signup'].includes(location.pathname);
     const is404Page = !['/', '/movies', '/saved-movies', '/profile', '/signin', '/signup'].includes(location.pathname);
 
-    const headerStyle = {
-        backgroundColor: isHomePage ? '#F3C1F8' : '#FFF',
-    };
-    const allowedRoutes = ['/', '/movies', '/saved-movies', '/profile'];
+    const headerClasses = [
+        'header',
+        isHomePage ? 'header_home' : 'header_other',
+        isMenuOpen ? 'open' : ''
+    ].join(' ');
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
@@ -44,54 +48,50 @@ function Header({ loggedIn }) {
     }
 
     return (
-        <header className={`header ${isAuthPage ? 'header_auth' : ''} ${isMenuOpen ? 'open' : ''}`} style={headerStyle}>
-            <Link to='/' className={`header__logo ${isAuthPage ? 'header__logo_auth' : ''}`}>
-                <img src={logo} alt='Логотип дипломного проекта' />
-            </Link>
-            {isMobile && !isAuthPage && !['/signin', '/signup'].includes(location.pathname) ? (
-                <>
-                    <button
-                        className={`header__burger-btn ${isMenuOpen ? 'open' : ''}`}
-                        onClick={toggleMenu}
-                    >
-                        <span className='header__burger-line'></span>
-                        <span className='header__burger-line'></span>
-                        <span className='header__burger-line'></span>
-                    </button>
-                    <div className={`burger-menu-container ${isMenuOpen ? 'open' : ''}`}>
+        <header className={headerClasses}>
+            <div className='header__content'>
+                <Link to='/' className='header__logo'>
+                    <img src={logo} alt='Логотип дипломного проекта' />
+                </Link>
+                {showBurgerMenu ? (
+                    <>
+                        <button
+                            className={`header__burger-btn ${isMenuOpen ? 'open' : ''}`}
+                            onClick={toggleMenu}
+                        >
+                            <span className='header__burger-line'></span>
+                            <span className='header__burger-line'></span>
+                            <span className='header__burger-line'></span>
+                        </button>
+                        <div className={`burger-menu-container ${isMenuOpen ? 'open' : ''}`}>
+                            <Navigation
+                                loggedIn={loggedIn}
+                                isMobile={isMobile}
+                                isMenuOpen={isMenuOpen}
+                                closeMenu={closeMenu}
+                                isAuthPage={isAuthPage}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    showNavigation ? (
                         <Navigation
                             loggedIn={loggedIn}
                             isMobile={isMobile}
                             isMenuOpen={isMenuOpen}
                             closeMenu={closeMenu}
-                            isHidden={isAuthPage}
+                            isAuthPage={isAuthPage}
                         />
-                    </div>
-                </>
-            ) : (
-                <Navigation
-                    loggedIn={loggedIn}
-                    isMobile={isMobile}
-                    isMenuOpen={isMenuOpen}
-                    closeMenu={closeMenu}
-                    isHidden={isAuthPage}
-                />
-            )}
-            {loggedIn ? (
-                location.pathname && allowedRoutes.includes(location.pathname) ? (
-                    null
-                ) : null
-            ) : (
-                location.pathname && allowedRoutes.includes(location.pathname) ? (
-                    <div className='header__links'>
-                        <Link to='/signup' className='header__link'>Регистрация</Link>
-                        <Link to='/signin' className='header__link header__link_login'>Войти</Link>
-                    </div>
-                ) : null
-            )}
+                    ) : (
+                        <div className='header__links'>
+                            <Link to='/signup' className='header__link'>Регистрация</Link>
+                            <Link to='/signin' className='header__link header__link_login'>Войти</Link>
+                        </div>
+                    )
+                )}
+            </div>
         </header>
     );
-
 }
 
 export default Header;

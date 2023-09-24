@@ -2,27 +2,29 @@ import React from 'react';
 
 function AboutProject() {
     return (
-        <section id='sectionAboutProject' className='aboutProject'>
-            <h2 className='aboutProject__title section__title'>О проекте</h2>
-            <div className='aboutProject__info'>
-                <div className='aboutProject__cell'>
-                    <h3 className='aboutProject__subtitle'>Дипломный проект включал 5 этапов</h3>
-                    <p className='aboutProject__text section__text'>
-                        Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
-                    </p>
+        <section id='section-about-project' className='about-project'>
+            <div className='about-project__content'>
+                <h2 className='about-project__title section__title'>О проекте</h2>
+                <div className='about-project__info'>
+                    <div className='about-project__cell'>
+                        <h3 className='about-project__subtitle'>Дипломный проект включал 5 этапов</h3>
+                        <p className='about-project__text section__text'>
+                            Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
+                        </p>
+                    </div>
+                    <div className='about-project__cell'>
+                        <h3 className='about-project__subtitle'>На выполнение диплома ушло 5 недель</h3>
+                        <p className='about-project__text section__text'>
+                            У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
+                        </p>
+                    </div>
                 </div>
-                <div className='aboutProject__cell'>
-                    <h3 className='aboutProject__subtitle'>На выполнение диплома ушло 5 недель</h3>
-                    <p className='aboutProject__text section__text'>
-                        У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
-                    </p>
+                <div className='about-project__duration'>
+                    <p className='about-project__duration-text section__text'>1 неделя</p>
+                    <p className='about-project__duration-text section__text'>4 недели</p>
+                    <p className='about-project__duration-text section__text'>Back-end</p>
+                    <p className='about-project__duration-text section__text'>Front-end</p>
                 </div>
-            </div>
-            <div className='aboutProject__duration'>
-                <p className='aboutProject__duration-text section__text'>1 неделя</p>
-                <p className='aboutProject__duration-text section__text'>4 недели</p>
-                <p className='aboutProject__duration-text section__text'>Back-end</p>
-                <p className='aboutProject__duration-text section__text'>Front-end</p>
             </div>
         </section>
     );

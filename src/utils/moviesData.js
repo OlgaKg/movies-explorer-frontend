@@ -57,7 +57,7 @@ const moviesData = [
   {
     id: 8,
     image: pic8,
-    name: 'Gimme Danger: История Игги и The Stooges',
+    name: 'Gimme Danger: История Игги и The Stooges Gimme Danger: История Игги и The StoogesGimme Danger: История Игги и The StoogesGimme Danger: История Игги и The StoogesGimme Danger: История Игги и The StoogesGimme Danger: История Игги и The Stooges',
     duration: '1ч 17м',
   },
   {

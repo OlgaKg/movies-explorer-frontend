@@ -1,6 +1,6 @@
 .search-form {
     display: grid;
-    grid-template-columns: 1fr 246px;
+    grid-template-columns: 1fr 20%;
     border-radius: 9px;
     background: #FDFDFD;
     box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
@@ -9,11 +9,14 @@
     margin: 70px auto 69px;
     align-items: center;
     justify-content: space-between;
+    gap: 17px;
 }
 
-.search-fotm__container {
-    display: grid;
-    grid-template-columns: 1fr 59px;
+.search-form__container {
+    display: flex;
+    min-height: 72px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .search-form__input {
@@ -36,6 +39,17 @@
     font-weight: 400;
     line-height: 20px;
     outline: none;
+    width: 90%;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.1s ease-in-out;
+}
+
+.search-form__search-input:focus:hover {
+    border-bottom: 1px solid #3456F3;
+}
+
+.search-form__search-input:focus {
+    border-bottom: 1px solid transparent;
 }
 
 .search-form__button {
@@ -50,7 +64,8 @@
     line-height: 18px;
     padding: 8px 12.35px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
+    height: 34px;
 }
 
 .search-form__button:hover {
@@ -60,10 +75,9 @@
 .search-form__checkbox {
     display: flex;
     align-items: center;
-    margin: 0 20px 0 19px;
-    min-height: 40px;
     border-left: 1px solid #CBCBCB;
-    padding-left: 29px;
+    padding: 0 30px;
+    min-height: 40px;
 }
 
 .search-form__filter-label {
@@ -85,11 +99,7 @@
         padding-left: 19px;
     }
 
-    .search-form__button {
-        margin-right: 19px;
-    }
-
-    .search-fotm__container {
+    .search-form__container {
         grid-template-columns: 1fr 78px;
     }
 }
@@ -97,9 +107,10 @@
 @media screen and (max-width:320px) {
     .search-form {
         grid-template-columns: 1fr;
-        grid-template-rows: 72px 109px;
-        margin: 80px 10px 0;
+        margin: 80px auto 0;
         max-width: 300px;
+        box-shadow: none;
+        background: transparent;
     }
 
     .search-form__input {
@@ -122,5 +133,19 @@
     .search-form__checkbox {
         justify-content: center;
         border: none;
+        min-height: 76px;
+        padding-left: 30px;
+        padding-bottom: 16px;
     }
+
+    .search-form__container {
+        box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+        border-radius: 9px;
+        background: #FDFDFD;
+    }
+
+    .search-form__button {
+        margin-right: 19px;
+    }
+
 }

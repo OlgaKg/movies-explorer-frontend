@@ -4,8 +4,10 @@
     justify-content: center;
     justify-items: center;
     align-items: flex-start;
-    margin: 0 auto;
+    min-height: 100vh;
+    padding: 0 30px;
     max-width: 396px;
+    margin: 0 auto;
 }
 
 .auth__title {
@@ -13,6 +15,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    text-align: left;
     margin: 0 0 40px;
 }
 
@@ -20,6 +23,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 396px;
     height: 100%;
 }
 
@@ -30,13 +34,14 @@
     font-weight: 400;
     line-height: normal;
     text-align: left;
-    height: 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: stretch;
+    margin-bottom: 20px;
 }
 
 .auth__input {
-    width: 100%;
-    max-width: 366px;
-    margin: 10px auto 10px;
     border-style: none;
     border-radius: 8px;
     background-color: #F9F9F9;
@@ -44,8 +49,19 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    padding: 15px;
+    padding: 0 15px;
     outline: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.1s ease-in-out;
+    height: 46px;
+}
+
+.auth__input:focus:hover {
+    border-bottom: 1px solid #3456F3;
+}
+
+.auth__input:focus {
+    border-bottom: 1px solid transparent;
 }
 
 .auth__input-password {
@@ -64,7 +80,7 @@
     font-size: 14px;
     margin-top: 72px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .auth__btn:hover {
@@ -72,7 +88,7 @@
 }
 
 .auth__signin {
-    margin: 0 auto 70px;
+    margin: 0 auto;
     text-align: center;
     font-size: 14px;
     font-style: normal;
@@ -89,7 +105,7 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .auth__link:hover {
@@ -104,20 +120,19 @@
     line-height: normal;
 }
 
-@media screen and (max-width: 768px) {
-    .auth__signin {
-        margin-bottom: 232px;
-    }
-}
-
-
 @media screen and (max-width: 320px) {
     .auth {
         max-width: 260px;
         align-items: center;
     }
+
+    .auth__btn {
+        font-size: 12px;
+    }
+
     .auth__title {
         margin: 0 auto 80px;
+        text-align: center;
     }
 
     .auth__form {
@@ -125,17 +140,23 @@
     }
 
     .auth__input {
-        max-width: 260px;
-        padding: 15px 0 15px;
+        max-width: 230px;
+        padding: 0 15px 0;
     }
 
     .auth__btn {
-        margin-top: 157px;
+        margin-top: 156px;
     }
 
     .auth__signin {
         font-size: 12px;
-        margin-bottom: 30px;
     }
 
+    .auth__signin-text {
+        margin-top: 15px;
+    }
+
+    .auth__btn-login {
+        margin-top: 245px;
+    }
 }

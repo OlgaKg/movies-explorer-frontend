@@ -9,14 +9,16 @@ function MoviesCardList({ isSavedPage }) {
     setVisibleMovies(visibleMovies + 3);
   };
   return (
-    <section className='moviesCardList'>
-      {moviesData.slice(0, visibleMovies).map((movie) => (
-        <MoviesCard key={movie.id} movie={movie} isSavedPage={isSavedPage} />
-      ))}
+    <section className='movies-card-list'>
+      <div className='movies-card-list__content'>
+        {moviesData.slice(0, visibleMovies).map((movie) => (
+          <MoviesCard key={movie.id} movie={movie} isSavedPage={isSavedPage} />
+        ))}
 
-      {visibleMovies < moviesData.length && (
-        <button className='moviesCardList__loadMoreBtn' onClick={loadMore}>Ещё</button>
-      )}
+        {visibleMovies < moviesData.length && (
+          <button className='movies-card-list__loadMoreBtn' onClick={loadMore}>Ещё</button>
+        )}
+      </div>
     </section>
   );
 }

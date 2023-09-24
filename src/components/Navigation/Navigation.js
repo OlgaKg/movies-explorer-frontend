@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import account from '../../images/akk.svg';
+import darkAccountIcon from '../../images/darkAccount.svg';
+import grayAccountIcon from '../../images/grayAccount.svg';
 
 function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
   const location = useLocation();
@@ -13,26 +14,40 @@ function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
     return null;
   }
 
+  // const shouldHideNavigation = !loggedIn && window.innerWidth > 768;
+
+  // if (shouldHideNavigation) {
+  //   console.log(shouldHideNavigation)
+  //   return null;
+  // }
+
   return (
     <nav className={`navigation ${isHidden || (isMobile && !isMenuOpen) || isAuthPage ? 'hidden' : ''}`}>
       {loggedIn && (
-        <>
-          {isMobile && isMenuOpen && (
-            <Link to='/' className={`navigation__link ${isActive('/') ? 'active-link' : ''}`}>
-              Главная
+        <div className='navigation__menu'>
+          <div className='navigation__links'>
+            {isMobile && isMenuOpen && (
+              <Link to='/' className={`navigation__link ${isActive('/') ? 'active-link' : ''}`}>
+                Главная
+              </Link>
+            )}
+            <Link to='/movies' className={`navigation__link ${isActive('/movies') ? 'active-link' : ''}`}>
+              Фильмы
             </Link>
-          )}
-          <Link to='/movies' className={`navigation__link ${isActive('/movies') ? 'active-link' : ''}`}>
-            Фильмы
-          </Link>
-          <Link to='/saved-movies' className={`navigation__link ${isActive('/saved-movies') ? 'active-link' : ''}`}>
-            Сохраненные фильмы
-          </Link>
+            <Link to='/saved-movies' className={`navigation__link ${isActive('/saved-movies') ? 'active-link' : ''}`}>
+              Сохраненные фильмы
+            </Link>
+          </div>
           <Link to='/profile' className={`navigation__link navigation__link_account ${isActive('/profile') ? 'active-link' : ''}`}>
             Аккаунт
-            <img src={account} alt='Иконка аккаунта' className='navigation__account-icon' />
+            <img src={location.pathname === '/' ? darkAccountIcon : grayAccountIcon} alt='Иконка аккаунта' className='navigation__account-icon' />
           </Link>
-        </>
+        </div>
+      )}
+      {loggedIn && isMobile && !isAuthPage && !isMenuOpen && (
+        <Link to='/' className={`navigation__link ${isActive('/') ? 'active-link' : ''}`}>
+          Главная
+        </Link>
       )}
     </nav>
   );

@@ -1,8 +1,13 @@
 .footer {
-    padding: 0 70px 20px;
+    width: 100%;
     margin-top: 79px;
-    margin-left: auto;
-    margin-right: auto;
+    flex: 0;
+}
+
+.footer__content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 70px 20px;
 }
 
 .footer__title {
@@ -43,7 +48,7 @@
     text-decoration: none;
     color: #000;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
 }
 
 .footer__link:hover {
@@ -51,7 +56,7 @@
 }
 
 @media screen and (max-width:768px) {
-    .footer {
+    .footer__content {
         padding: 0 0 20px;
         max-width: 708px;
     }
@@ -61,7 +66,11 @@
     .footer {
         margin: 40px auto 0;
         text-align: center;
+    }
 
+    .footer__content {
+        padding: 0;
+        max-width: 300px;
     }
 
     .footer__info {

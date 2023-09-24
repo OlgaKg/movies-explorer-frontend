@@ -2,9 +2,9 @@ import React from 'react';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 
 const sections = [
-  { id: 'sectionAboutProject', text: 'О проекте' },
-  { id: 'sectionTechs', text: 'Технологии' },
-  { id: 'sectionAboutMe', text: 'Студент' },
+  { id: 'section-about-project', text: 'О проекте' },
+  { id: 'section-techs', text: 'Технологии' },
+  { id: 'section-about-me', text: 'Студент' },
 ];
 
 function NavTab() {

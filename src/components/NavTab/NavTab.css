@@ -23,6 +23,11 @@
 .nav-tab__item {
     margin-right: 40px;
     cursor: pointer;
+    transition: opacity .3s ease-in-out;
+}
+
+.nav-tab__item:hover {
+    opacity: .7;
 }
 
 .nav-tab__item:last-child {
