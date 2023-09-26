@@ -14,7 +14,7 @@ function Portfolio() {
                         rel='noopener noreferrer'
                     >
                         Статичный сайт
-                        <span className='portfolio__icon'>↗</span>
+                        <span className='portfolio__icon'></span>
                     </a>
 
                 </li>
@@ -26,7 +26,7 @@ function Portfolio() {
                         rel='noopener noreferrer'
                     >
                         Адаптивный сайт
-                        <span className='portfolio__icon'>↗</span>
+                        <span className='portfolio__icon'></span>
                     </a>
                 </li>
                 <li className='portfolio__item'>
@@ -37,7 +37,7 @@ function Portfolio() {
                         rel='noopener noreferrer'
                     >
                         Одностраничное приложение
-                        <span className='portfolio__icon'>↗</span>
+                        <span className='portfolio__icon'></span>
                     </a>
                 </li>
             </ul>

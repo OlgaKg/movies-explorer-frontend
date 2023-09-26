@@ -5,21 +5,43 @@
 .about-me__content {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 110px 70px 97px;
+    padding: 113px 70px 97px;
 }
 
 .about-me__container {
     display: flex;
     justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: row-reverse;
 }
 
 .about-me__container-info {
     text-align: left;
     max-width: 600px;
     margin-top: 66px;
+    flex: 1 0;
+}
+
+.about-me__title {
+    margin: 0;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.88px;
+    text-align: left;
+    border-bottom: 1px solid #000;
+    padding-bottom: 23px;
 }
 
 .about-me__title-description {
+    font-style: normal;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 58px;
+    letter-spacing: -2px;
     margin: 0;
 }
 
@@ -54,9 +76,10 @@
 
 .about-me__image {
     width: 100%;
-    max-height: 327px;
+    height: auto;
     border-radius: 10px;
     margin-top: 66px;
+    max-width: 270px;
 }
 
 @media screen and (max-width:768px) {
@@ -65,7 +88,7 @@
     }
 
     .about-me__container-info {
-        max-width: 364px;
+        max-width: 100%;
     }
 
     .about-me__title-description {
@@ -84,12 +107,22 @@
         font-size: 12px;
         line-height: 18px;
         margin-top: 20px;
-        margin-bottom: 68px;
+        margin-bottom: 86px;
         margin-left: 0;
     }
 
     .about-me__image {
-        max-height: 307px;
+        max-width: 255px;
+    }
+}
+
+@media screen and (max-width:680px) {
+    .about-me__image {
+        max-width: none;
+    }
+
+    .about-me__container-info {
+        width: 100%;
     }
 }
 
@@ -98,23 +131,13 @@
         padding: 69px 14px 65px;
     }
 
-    .about-me__container {
-        max-width: 292px;
-        flex-wrap: wrap;
-        flex-direction: column-reverse;
-    }
-
-    .about-me__container-foto {
-        margin-top: 60px;
-    }
-
     .about-me__image {
         max-height: 352px;
-        margin: 0 auto;
+        margin: 60px auto 0;
     }
 
     .about-me__container-info {
-        margin-top: 36px;
+        margin-top: 10px;
     }
 
     .about-me__title-description {
@@ -135,5 +158,11 @@
         margin-top: 20px;
         margin-bottom: 40px;
     }
+
+    .about-me__title {
+        font-size: 18px;
+        letter-spacing: -0.72px;
+        padding-bottom: 28px;
+    } 
 
 }

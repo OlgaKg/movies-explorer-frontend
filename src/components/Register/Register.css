@@ -51,17 +51,12 @@
     line-height: normal;
     padding: 0 15px;
     outline: none;
-    border-bottom: 1px solid transparent;
     transition: border-bottom 0.1s ease-in-out;
     height: 46px;
 }
 
-.auth__input:focus:hover {
-    border-bottom: 1px solid #3456F3;
-}
-
 .auth__input:focus {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #3456F3;
 }
 
 .auth__input-password {

@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import darkAccountIcon from '../../images/darkAccount.svg';
-import grayAccountIcon from '../../images/grayAccount.svg';
 
 function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
   const location = useLocation();
@@ -40,7 +38,7 @@ function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
           </div>
           <Link to='/profile' className={`navigation__link navigation__link_account ${isActive('/profile') ? 'active-link' : ''}`}>
             Аккаунт
-            <img src={location.pathname === '/' ? darkAccountIcon : grayAccountIcon} alt='Иконка аккаунта' className='navigation__account-icon' />
+            <span className={`navigation__account-icon ${location.pathname === '/' ? 'darkAccount' : 'grayAccount'}`}></span>
           </Link>
         </div>
       )}

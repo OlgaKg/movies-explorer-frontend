@@ -10,7 +10,7 @@
      flex-direction: column;
      min-height: 524px;
      max-width: 1280px;
-     background: url(../../images/landing-logo.svg) center no-repeat;
+     background: url(../../images/landing-logo.svg) 50% 40% no-repeat;
      background-size: 320px 320px;
      text-align: center;
      margin: 0 auto;
@@ -22,9 +22,6 @@
      max-width: 730px;
      margin: 0 auto;
      padding-bottom: 39px;
- }
-
- .section__title-description {
      font-style: normal;
      font-size: 50px;
      font-weight: 400;
@@ -41,6 +38,7 @@
  @media screen and (max-width:768px) {
      .promo__content {
          min-height: 784px;
+         background-position: 50% 48%;
      }
 
      .promo__logo-landing {
@@ -57,16 +55,14 @@
      .promo__content {
          min-height: 570px;
          background-size: 248.005px 248.004px;
-     }
-
-     .section__title-description {
-         max-width: 300px;
-         font-size: 31px;
-         line-height: 39px;
-         letter-spacing: -1.24px;
+         background-position: 50% 44%;
      }
 
      .promo__title {
         padding-bottom: 37px;
+        max-width: 300px;
+        font-size: 31px;
+        line-height: 39px;
+        letter-spacing: -1.24px;
     }
  }

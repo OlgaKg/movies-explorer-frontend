@@ -26,7 +26,7 @@
     line-height: 50px;
     letter-spacing: -1.2px;
     padding: 0;
-    margin: 50px 0 0;
+    margin: 52px 0 0;
 }
 
 .portfolio__item {
@@ -52,7 +52,8 @@
     opacity: .7;
 }
 
-.portfolio__icon {
+.portfolio__icon::before {
+    content: "↗";
     font-size: 30px;
     font-style: normal;
     font-weight: 400;
@@ -60,17 +61,20 @@
     letter-spacing: -1.2px;
 }
 
+
 @media screen and (max-width:768px) {
     .portfolio__container {
         padding: 0 50px 52px;
     }
 
     .portfolio__list {
+        margin: 53px 0 0;
         font-size: 28px;
         letter-spacing: -1.12px;
     }
 
-    .portfolio__icon {
+    .portfolio__icon::before {
+        content: "↗";
         font-size: 28px;
         letter-spacing: -1.12px;
     }
@@ -98,7 +102,8 @@
         padding-bottom: 18px;
     }
 
-    .portfolio__icon {
+    .portfolio__icon::before {
+        content: "↗";
         font-size: 18px;
         line-height: 28px;
         letter-spacing: -0.72px;

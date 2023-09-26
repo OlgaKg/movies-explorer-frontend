@@ -18,7 +18,7 @@ function Header({ loggedIn }) {
 
     const headerClasses = [
         'header',
-        isHomePage ? 'header_home' : 'header_other',
+        isHomePage ? 'header_place_home' : 'header_other',
         isMenuOpen ? 'open' : ''
     ].join(' ');
 

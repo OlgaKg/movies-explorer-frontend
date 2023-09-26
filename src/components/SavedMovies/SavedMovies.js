@@ -10,7 +10,7 @@ function SavedMovies() {
     <div className='saved-movies'>
       <div className='saved-movies__content'>
         <SearchForm />
-        <div className='movies-card-list__content'>
+        <div className='saved-movies__container'>
           {savedMovies.map((movie) => (
             <MoviesCard key={movie.id} movie={movie} isSavedPage={true} />
           ))}

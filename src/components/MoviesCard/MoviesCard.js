@@ -23,7 +23,7 @@ function MoviesCard({ movie, isSavedPage }) {
       <img className='movies-card__image' key={movie.id} src={movie.image} alt={`${movie.name}`} />
       {isSavedPage ? (
         isHovered ? (
-          <div className='movies-card__remove-button' onClick={handleSaveClick}>&#215;</div>
+          <button className='movies-card__remove-button' onClick={handleSaveClick}>&#215;</button>
         ) : (
           ''
         )

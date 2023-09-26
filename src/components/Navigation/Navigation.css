@@ -37,10 +37,21 @@
     margin-left: 50px;
 }
 
-.navigation__account-icon {
+.navigation__account-icon::before {
+    content: '';
+    display: inline-block;
     width: 30px;
     height: 30px;
     margin-left: 13px;
+    background-size: cover;
+}
+
+.navigation__account-icon.grayAccount::before {
+    background-image: url('../../images/grayAccount.svg');
+}
+
+.navigation__account-icon.darkAccount::before {
+    background-image: url('../../images/darkAccount.svg');
 }
 
 .navigation__links {
@@ -54,10 +65,10 @@
         display: flex;
         flex-direction: column;
         align-self: stretch;
-        padding: 134px 0 90px 0;
+        padding: 134px 0 85px 0;
         justify-content: space-between;
         align-items: center;
-        width: 67%;
+        width: 68%;
         background-color: #fff;
         z-index: 100;
         transform: translateX(100%);
@@ -97,10 +108,6 @@
         border-bottom: 2px solid;
     }
 
-    .active-link:last-child {
-        border-bottom: none
-    }
-
     .navigation__link_account {
         display: flex;
         align-items: center;
@@ -111,12 +118,13 @@
 
 @media screen and (max-width:320px) {
     .navigation {
-        padding: 122px 0 90px 0;
+        padding: 127px 0 37px 0;
         width: 100%;
     }
 
     .navigation__link {
-        padding: 24px 0 6px;
+        padding: 19px 0 0;
+        padding-bottom: 9px;
     }
 
     .navigation__link_account {

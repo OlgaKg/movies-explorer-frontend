@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import magnifier from '../../images/magnifier_icon.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm() {
@@ -20,10 +19,10 @@ function SearchForm() {
 
 
     return (
-        <form className='search-form'>
+        <form className='search-form' name='form-search-film'>
             <div className='search-form__container'>
                 <div className='search-form__input'>
-                    <img className='search-form__search-icon' src={magnifier} alt='иконка лупы' />
+                    <div className='search-form__search-icon'></div>
                     <input
                         className='search-form__search-input'
                         type='text'

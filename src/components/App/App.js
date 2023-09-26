@@ -32,15 +32,15 @@ function App() {
     <div className='App'>
       {isExcludedFromFooter ? null :
         <Header loggedIn={loggedIn} currentPage={currentPage} />}
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
-        <Route path='/signup' element={<Register handleRegisterSubmit={handleRegisterSubmit} />} />
-        <Route path='/signin' element={<Login handleLoginSubmit={handleLoginSubmit} />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='*' element={<PageNotFound to='/signin' replace />} />
-      </Routes >
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/movies' element={<Movies />} />
+          <Route path='/saved-movies' element={<SavedMovies />} />
+          <Route path='/signup' element={<Register handleRegisterSubmit={handleRegisterSubmit} />} />
+          <Route path='/signin' element={<Login handleLoginSubmit={handleLoginSubmit} />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='*' element={<PageNotFound to='/signin' replace />} />
+        </Routes >
       {routesWithFooter.includes(window.location.pathname) &&
         !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
     </div>

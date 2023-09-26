@@ -50,10 +50,11 @@ function Profile() {
     };
 
     return (
+        <main className='main-account'>
         <div className='profile'>
             <div className='profile__container'>
                 <h1 className='profile__title'>Привет, {user.name}!</h1>
-                <form className='profile__form'>
+                <form className='profile__form' name='form-profile'>
                     <div className='profile__form-field'>
                         <span className='profile__form-label'>Имя</span>
                         {isEditing ? (
@@ -117,6 +118,7 @@ function Profile() {
                 </div>
             </div>
         </div>
+        </main>
     );
 }
 
