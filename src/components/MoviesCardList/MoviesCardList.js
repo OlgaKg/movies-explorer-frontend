@@ -16,7 +16,7 @@ function MoviesCardList({ isSavedPage }) {
         ))}
 
         {visibleMovies < moviesData.length && (
-          <button className='movies-card-list__loadMoreBtn' onClick={loadMore}>Ещё</button>
+          <button className='movies-card-list__load-more-btn' onClick={loadMore}>Ещё</button>
         )}
       </div>
     </section>
