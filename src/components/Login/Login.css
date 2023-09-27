@@ -1,0 +1,22 @@
+.auth__logo {
+    margin: 0 0 37px 0;
+}
+
+.auth__content {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+.auth__btn-login {
+    margin-top: 158px;
+}
+
+@media screen and (max-width: 320px) {
+    .header__logo_auth {
+        margin: 56px auto 46px;
+    }
+
+    .auth__btn-login {
+        margin-top: 247px;
+    }
+}
