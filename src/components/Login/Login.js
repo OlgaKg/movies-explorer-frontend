@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
+import * as auth from '../../utils/auth';
 
 function Login({ handleLoginSubmit }) {
     const [formValue, setFormValue] = useState({
@@ -12,7 +13,7 @@ function Login({ handleLoginSubmit }) {
         password: ''
     });
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const validateForm = () => {
         const errors = {};
@@ -40,18 +41,18 @@ function Login({ handleLoginSubmit }) {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        auth.loginUser(formValue.email, formValue.password).then(() => {
+            handleLoginSubmit(formValue.email);
+            navigate('/');
+        }).catch((err) => {
+            console.log(err);
+        });
 
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrorMessages(validationErrors);
             return;
         }
-        handleLoginSubmit(formValue.email, formValue.password);
-        // auth.loginUser(formValue.email, formValue.password).then((data) => {
-        //     localStorage.setItem('jwt', data.token);  
-        //     handleLogin(formValue.email);
-        //     navigate('/');
-        // }).catch((err) => { console.log(err) }); 
     }
 
     return (
@@ -62,7 +63,10 @@ function Login({ handleLoginSubmit }) {
                 </Link>
                 <div className='auth__content'>
                     <h1 className='auth__title'>Рады видеть!</h1>
-                    <form className='auth__form auth__form_place_login' name='form-login' onSubmit={handleSubmit} noValidate>
+                    <form className='auth__form auth__form_place_login'
+                        name='form-login'
+                        onSubmit={handleSubmit}
+                        noValidate>
                         <label className='auth__label'>E-mail
                             <input className='auth__input auth__input-email' id='email' name='email' type='email'
                                 placeholder='Введите email'

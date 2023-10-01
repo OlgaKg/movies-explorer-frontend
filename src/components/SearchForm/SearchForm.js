@@ -1,25 +1,10 @@
 import React, { useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm() {
-    // const [searchQuery, setSearchQuery] = useState('');
-    const [shortFilm, setShortFilm] = useState(false);
-
-    // const handleSearchChange = (e) => {
-    //     setSearchQuery(e.target.value);
-    //   };
-
-    const handleCheckboxChange = () => {
-        setShortFilm(!shortFilm);
-    };
-
-    //   const handleSearchSubmit = (e) => {
-    //     e.preventDefault();
-    //   };
-
+function SearchForm({ shortFilm, handleCheckboxChange, searchMovie, handleSearchInputChange, handleSearchSubmit}) {
 
     return (
-        <form className='search-form' name='form-search-film'>
+        <form className='search-form' name='form-search-film' onSubmit={handleSearchSubmit}>
             <div className='search-form__container'>
                 <div className='search-form__input'>
                     <div className='search-form__search-icon'></div>
@@ -28,8 +13,8 @@ function SearchForm() {
                         type='text'
                         placeholder='Фильм'
                         name='searchFilm'
-                    //   value={searchQuery}
-                    //   onChange={handleSearchChange}
+                        value={searchMovie}
+                         onChange={handleSearchInputChange}
                     />
                 </div>
                 <button type='submit' className='search-form__button'>
