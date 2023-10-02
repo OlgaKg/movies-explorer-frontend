@@ -5,60 +5,55 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getMovies } from '../../utils/MoviesApi';
 
 function Movies() {
-  const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
+  const [shortMovies, setShortMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
-  const [shortFilm, setShortFilm] = useState(false);
+  const [isShortMovie, setIsShortMovie] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  //const searchMoviesString = localStorage.getItem('searchMovieString');
-
-  useEffect(() => {
-    setIsLoading(true);
-    getMovies()
-      .then((movies) => {
-        setMovies(movies);
-      })
-      .catch(err => {
-        console.error(err);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
 useEffect(() => {
-  const filteredMovies = movies.filter((movie) => {
-    return (
-      (movie.nameRU.toLowerCase().includes(searchMovie.toLowerCase()) ||
-        movie.nameEN.toLowerCase().includes(searchMovie.toLowerCase())) 
-    );
-  });
-  
-  setFilteredMovies(filteredMovies);
-}, [movies, searchMovie])
-
-const handleSearchInputChange = (e) => {
-  const searchMovieString = e.target.value;
-
-  setSearchMovie(searchMovieString);
-};
+    handleGetFilteredMovies()
+    filterShortMovies()
+}, [searchMovie, isShortMovie])
 
 
 const handleSearchSubmit = (e) => {
   e.preventDefault();
 
-  localStorage.setItem('searchMovieString', searchMovie);
+  const searchMovieString = e.target.querySelector('input').value;
+  setSearchMovie(searchMovieString)
+  localStorage.setItem('searchMovieString', searchMovieString);
 };
 
-  const handleCheckboxChange = () => {
-    // Обновление состояния короткометражных фильмов
-    setShortFilm(!shortFilm);
+const handleGetFilteredMovies = ()=>{
+    if(searchMovie.length === 0){
+        return
+    }
 
-  if(!shortFilm){
-    const shortFilms = filteredMovies.filter(movie => movie.duration <=40);
-    setFilteredMovies(shortFilms);
-  } else {
-    handleSearchSubmit();
-  }
+    setIsLoading(true);
+    getMovies()
+        .then((movies) => {
+            const filteredApiMovies = movies.filter((movie) => {
+                return (
+                    (movie.nameRU.toLowerCase().includes(searchMovie.toLowerCase()) ||
+                        movie.nameEN.toLowerCase().includes(searchMovie.toLowerCase()))
+                );
+            })
+            setFilteredMovies(filteredApiMovies)
+            localStorage.setItem('filteredMovies', JSON.stringify(filteredApiMovies))
+        })
+        .catch(err => {
+            console.error(err);
+        })
+        .finally(() => setIsLoading(false));
+}
+
+const filterShortMovies = ()=>{
+    const shortFilteredMovies = filteredMovies.filter(movie => movie.duration <=40);
+    setShortMovies(shortFilteredMovies);
+}
+  const handleCheckboxChange = () => {
+    setIsShortMovie(!isShortMovie);
   };
 
   return (
@@ -66,12 +61,11 @@ const handleSearchSubmit = (e) => {
       <div className='movies__container'>
         <SearchForm
           handleCheckboxChange={handleCheckboxChange}
-          handleSearchInputChange={handleSearchInputChange}
           handleSearchSubmit={handleSearchSubmit}
-          shortFilm={shortFilm} />
+          shortFilm={isShortMovie} />
         {isLoading &&
           <Preloader />}
-        <MoviesCardList movies={filteredMovies} isSavedPage={false} />
+        <MoviesCardList movies={isShortMovie ? shortMovies : filteredMovies} isSavedPage={false} />
       </div>
     </section>
   );

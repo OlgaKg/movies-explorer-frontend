@@ -91,7 +91,7 @@ function App() {
       .then(() => {
         // setRegisterPopupOpen(true);
         // setInfoTooltip(true);
-        navigate('/signin');
+        navigate('/movies');
       }).catch((err) => {
         // setInfoTooltip(false);
         console.log(err)
@@ -109,7 +109,7 @@ function App() {
     request()
       // .then(closeAllPopups)
       .catch(console.error)
-    .finally(() => setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   function handleUpdateUser(inputValues) {
@@ -129,6 +129,22 @@ function App() {
     console.log('User logged out');
   };
 
+  // function handleMovieSaved(movie) {
+  //   const isSaved = movie.likes.some(i => i === currentUser._id);
+  //   console.log(isSaved);
+  //   mainApi.changeSaveMovieStatus(movie._id, !isSaved)
+  //     .then((newMovieCard) => {
+  //       setMovies((state) => state.map((c) => c._id === movie._id ? newMovieCard : c));
+  //     }).catch((err) => { console.log(err) });
+  // }
+
+  // function handleMovieDelete(movie) {
+  //   mainApi.deleteMovie(movie._id)
+  //     .then(() => {
+  //       setMovies((state) => state.filter((c) => c._id !== movie._id));
+  //     }).catch((err) => { console.log(err) });
+  // }
+
   return (
     <AppContext.Provider value={{ isLoading }}>
       <CurrentUserContext.Provider value={currentUser}>
@@ -141,12 +157,17 @@ function App() {
               <ProtectedRoute
                 element={Movies}
                 isLoggedIn={isLoggedIn}
-                movies={movies} />
+                movies={movies} 
+                // onMovieSave={handleMovieSaved}
+                />
             } />
             <Route path='/saved-movies' element={
               <ProtectedRoute
                 element={SavedMovies}
-                isLoggedIn={isLoggedIn} />
+                isLoggedIn={isLoggedIn}
+                // onMovieSave={handleMovieSaved}
+                // onMovieDelete={handleMovieDelete} 
+                />
             } />
             <Route path='/profile' element={
               <ProtectedRoute

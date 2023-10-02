@@ -88,6 +88,14 @@
     line-height: 18px;
 }
 
+.search-form__error {
+    position: relative;
+    top: -35px;
+    color: #FF4062;
+    font-size: 13px;
+    font-style: normal;
+}
+
 @media screen and (max-width:768px) {
     .search-form {
         margin: 80px auto 108px;
