@@ -12,13 +12,6 @@ function Navigation({ isLoggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage })
     return null;
   }
 
-  // const shouldHideNavigation = !loggedIn && window.innerWidth > 768;
-
-  // if (shouldHideNavigation) {
-  //   console.log(shouldHideNavigation)
-  //   return null;
-  // }
-
   return (
     <nav className={`navigation ${isHidden || (isMobile && !isMenuOpen) || isAuthPage ? 'hidden' : ''}`}>
       {isLoggedIn && (

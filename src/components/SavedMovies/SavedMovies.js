@@ -11,8 +11,6 @@ function SavedMovies() {
   const [shortFilm, setShortFilm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const searchMoviesString = localStorage.getItem('searchMovieString');
-
   useEffect(() => {
     setIsLoading(true);
     mainApi.getSavedMovies()
@@ -50,7 +48,6 @@ function SavedMovies() {
   };
 
   const handleCheckboxChange = () => {
-    // Обновление состояния короткометражных фильмов
     setShortFilm(!shortFilm);
 
     if (!shortFilm) {

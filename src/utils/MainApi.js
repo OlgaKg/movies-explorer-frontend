@@ -54,17 +54,29 @@ class MainApi {
     //     })
     // }
 
-    saveMovie(movie) {
+    saveMovie(info) {
         return this._request('movies', {
           method: 'POST',
           headers: this._headers,
-          body: JSON.stringify(movie),
+          body: JSON.stringify({
+            country: info.country,
+            director: info.director,
+            duration: info.duration,
+            year: info.year,
+            description: info.description,
+            image: 'https://api.nomoreparties.co' + info.image.url,
+            trailerLink: info.trailerLink,
+            thumbnail: 'https://api.nomoreparties.co' +  info.thumbnail,
+            movieId: info.id,
+            nameRU: info.nameRU,
+            nameEN: info.nameEN,
+        }),
         });
       }
       
 
     unsaveMovie(idMovie) {
-        return this._request(`movies/${idMovie}/likes`, {
+        return this._request(`movies/${idMovie}`, {
             method: 'DELETE',
             headers: this._headers,
         })

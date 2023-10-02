@@ -28,12 +28,6 @@ function App() {
   const location = useLocation();
 
   const currentPage = location.pathname;
-  // const handleRegisterSubmit = (name, email, password) => {
-  //   console.log('Регистрация:', name, email, password);
-  // };
-  // const handleLoginSubmit = (email, password) => {
-  //   console.log('Вход:', email, password);
-  // };
   const routesWithFooter = ['/', '/movies', '/saved-movies'];
   const excludeFooterRoutes = ['/signin', '/signup', '*'];
   const isExcludedFromFooter = excludeFooterRoutes.includes(currentPage);
@@ -107,7 +101,6 @@ function App() {
   function handleSubmit(request) {
     setIsLoading(true);
     request()
-      // .then(closeAllPopups)
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }
@@ -128,22 +121,6 @@ function App() {
     navigate('/');
     console.log('User logged out');
   };
-
-  // function handleMovieSaved(movie) {
-  //   const isSaved = movie.likes.some(i => i === currentUser._id);
-  //   console.log(isSaved);
-  //   mainApi.changeSaveMovieStatus(movie._id, !isSaved)
-  //     .then((newMovieCard) => {
-  //       setMovies((state) => state.map((c) => c._id === movie._id ? newMovieCard : c));
-  //     }).catch((err) => { console.log(err) });
-  // }
-
-  // function handleMovieDelete(movie) {
-  //   mainApi.deleteMovie(movie._id)
-  //     .then(() => {
-  //       setMovies((state) => state.filter((c) => c._id !== movie._id));
-  //     }).catch((err) => { console.log(err) });
-  // }
 
   return (
     <AppContext.Provider value={{ isLoading }}>
