@@ -47,13 +47,6 @@ class MainApi {
         })
 	};
 
-    // saveMovie(idMovie) {
-    //     return this._request(`movies/${idMovie}/likes`, {
-    //         method: 'PUT',
-    //         headers: this._headers,
-    //     })
-    // }
-
     saveMovie(info) {
         return this._request('movies', {
           method: 'POST',
@@ -73,22 +66,6 @@ class MainApi {
         }),
         });
       }
-      
-
-    unsaveMovie(idMovie) {
-        return this._request(`movies/${idMovie}`, {
-            method: 'DELETE',
-            headers: this._headers,
-        })
-    }
-
-    changeSaveMovieStatus(idMovie, isSaved) {
-        if (isSaved) {
-            return this.addLikeMovie(idMovie);
-        } else {
-            return this.removeLikeMovie(idMovie);
-        }
-    }
 
     deleteMovie(idMovie) {
         return this._request(`movies/${idMovie}`, {
@@ -102,7 +79,6 @@ const mainApi = new MainApi({
     baseUrl: 'http://localhost:4000',
     // baseUrl: 'https://api.ypmesto.nomoreparties.co',
     headers: {
-        // authorization: '36c21e13-089d-4ac8-bd26-b85419c729aa',
         'Content-Type': 'application/json'
     }
 });

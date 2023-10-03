@@ -70,7 +70,7 @@ function SavedMovies() {
           <Preloader />}
         <div className='saved-movies__container'>
           {savedMovies.map((movie) => (
-            <MoviesCard key={movie.id} movie={movie} isSavedPage={true} />
+            <MoviesCard key={movie._id} movie={movie} isSavedPage={true} />
           ))}
         </div>
       </div>
