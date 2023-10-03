@@ -17,10 +17,10 @@ const formatDuration = (minutes) => {
   }
 };
 
-function MoviesCard({ movie, isSavedPage }) {
+function MoviesCard({ movie, isSavedPage, key }) {
   const { nameRU, nameEN, duration, image, trailerLink } = movie;
   const { savedMovies, addMovieToSaved, removeMovieFromSaved } = useSavedMovies();
-  const isSaved = savedMovies.some((savedMovie) => savedMovie.id === movie.id);
+  const isSaved = savedMovies.some((savedMovie) => savedMovie.movieId === movie.id);
   const [isHovered, setIsHovered] = useState(false);
   const MOVIE_API_URL = 'https://api.nomoreparties.co';
   const { pathname } = useLocation();
@@ -38,9 +38,9 @@ function MoviesCard({ movie, isSavedPage }) {
         });
     } else {
       mainApi
-        .deleteMovie(movie.id) // Выполняет запрос на сервер для удаления фильма из избранного
+        .deleteMovie(key) // Выполняет запрос на сервер для удаления фильма из избранного
         .then(() => {
-          removeMovieFromSaved(movie.id); // Обновляет контекст с актуальными данными
+          removeMovieFromSaved(key); // Обновляет контекст с актуальными данными
         })
         .catch((error) => {
           console.error('Ошибка при удалении фильма:', error);

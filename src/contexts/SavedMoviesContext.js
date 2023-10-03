@@ -14,7 +14,7 @@ export const SavedMoviesProvider = ({ children }) => {
   };
 
   const removeMovieFromSaved = (movieId) => {
-    const updatedSavedMovies = savedMovies.filter((movie) => movie !== movieId);
+    const updatedSavedMovies = savedMovies.filter((movie) => movie.movieId !== movieId);
     setSavedMovies(updatedSavedMovies);
   };
 
