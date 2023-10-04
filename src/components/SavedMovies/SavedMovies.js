@@ -6,6 +6,7 @@ import mainApi from '../../utils/MainApi';
 
 function SavedMovies() {
   const [savedMovies, setSavedMovies] = useState([]);
+  const [updatedSavedMovies, setUpdatedSavedMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [shortFilm, setShortFilm] = useState(false);
@@ -18,6 +19,7 @@ function SavedMovies() {
         console.log('Список сохраненных фильмов:', movies); // проверка
 
         setSavedMovies(movies);
+        setUpdatedSavedMovies(movies);
       })
       .catch(err => {
         console.error(err);
@@ -47,6 +49,19 @@ function SavedMovies() {
     localStorage.setItem('searchMovieString', searchMovie);
   };
 
+  const handleRemoveMovie = (movieId) => {
+    // Вызываем функцию для удаления фильма из сохраненных
+    mainApi.deleteMovie(movieId)
+      .then(() => {
+        // Обновляем savedMovies после успешного удаления
+        const updatedMovies = savedMovies.filter(movie => movie._id !== movieId);
+        setSavedMovies(updatedMovies);
+      })
+      .catch((error) => {
+        console.error('Ошибка при удалении фильма:', error);
+      });
+  };
+
   const handleCheckboxChange = () => {
     setShortFilm(!shortFilm);
 
@@ -69,8 +84,8 @@ function SavedMovies() {
         {isLoading &&
           <Preloader />}
         <div className='saved-movies__container'>
-          {savedMovies.map((movie) => (
-            <MoviesCard key={movie._id} movie={movie} isSavedPage={true} />
+          {updatedSavedMovies.map((movie) => (
+            <MoviesCard key={movie._id} movie={movie} isSavedPage={true} onRemoveMovie={handleRemoveMovie}/>
           ))}
         </div>
       </div>

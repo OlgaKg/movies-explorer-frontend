@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({onUpdateUser,  setLoggedIn}) {
+function Profile({onUpdateUser, setLoggedIn, logOut }) {
     const currentUser = useContext(CurrentUserContext);
     const user = currentUser;
 
@@ -42,13 +42,12 @@ function Profile({onUpdateUser,  setLoggedIn}) {
         setError(null);
     };
 
-    const handleLogout = () => {
-        onUpdateUser({});
-        setLoggedIn(false);
-        navigate('/');
-        localStorage.removeItem('searchMovieString');
-        localStorage.removeItem('isShortFilm');
-    };
+    // const handleLogout = () => {
+    //     onUpdateUser({});
+    //     setLoggedIn(false);
+    //     navigate('/');
+
+    // };
 
     return (
         <main className='main-account'>
@@ -111,7 +110,7 @@ function Profile({onUpdateUser,  setLoggedIn}) {
                                 <button onClick={handleEditClick} className='profile__edit-button'>
                                     Редактировать
                                 </button>
-                                <button onClick={handleLogout} className='profile__logout-button'>
+                                <button onClick={logOut} className='profile__logout-button'>
                                     Выйти из аккаунта
                                 </button>
                             </>

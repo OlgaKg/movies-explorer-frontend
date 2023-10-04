@@ -12,6 +12,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import Profile from '../Profile/Profile';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AppContext } from '../../contexts/AppContext';
+import { SavedMoviesProvider } from '../../contexts/SavedMoviesContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
@@ -23,6 +24,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // , useSavedMovies const { savedMovies, addMovieToSaved, removeMovieFromSaved } = useSavedMovies(); value={{ savedMovies, addMovieToSaved, removeMovieFromSaved }}
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -119,49 +122,55 @@ function App() {
     setCurrentUser({});
     setLoggedIn(false);
     navigate('/');
+    localStorage.removeItem('searchMovieString');
+    localStorage.removeItem('isShortFilm');
     console.log('User logged out');
   };
 
   return (
     <AppContext.Provider value={{ isLoading }}>
       <CurrentUserContext.Provider value={currentUser}>
-        <div className='App'>
-          {isExcludedFromFooter ? null :
-            <Header isLoggedIn={isLoggedIn} currentPage={currentPage} />}
-          <Routes>
-            <Route path='/' element={<Main />} />
-            <Route path='/movies' element={
-              <ProtectedRoute
-                element={Movies}
-                isLoggedIn={isLoggedIn}
-                movies={movies}
+        <SavedMoviesProvider>
+          <div className='App'>
+            {isExcludedFromFooter ? null :
+              <Header isLoggedIn={isLoggedIn} currentPage={currentPage} />}
+            <Routes>
+              <Route path='/' element={<Main />} />
+              <Route path='/movies' element={
+                <ProtectedRoute
+                  element={Movies}
+                  isLoggedIn={isLoggedIn}
+                  movies={movies}
+                  setLoggedIn={setLoggedIn}
                 // onMovieSave={addMovieToSaved}
                 // onMovieDelete={removeMovieFromSaved}
-              />
-            } />
-            <Route path='/saved-movies' element={
-              <ProtectedRoute
-                element={SavedMovies}
-                isLoggedIn={isLoggedIn}
+                />
+              } />
+              <Route path='/saved-movies' element={
+                <ProtectedRoute
+                  element={SavedMovies}
+                  isLoggedIn={isLoggedIn}
                 // onMovieSave={addMovieToSaved}
                 // onMovieDelete={removeMovieFromSaved}
-              />
-            } />
-            <Route path='/profile' element={
-              <ProtectedRoute
-                element={Profile}
-                isLoggedIn={isLoggedIn}
-                onUpdateUser={handleUpdateUser}
-                handleLogout={handleLogout}
-                setLoggedIn={setLoggedIn} />
-            } />
-            <Route path='/signup' element={<Register handleRegisterSubmit={handleRegisterSubmit} />} />
-            <Route path='/signin' element={<Login handleLoginSubmit={handleLoginSubmit} />} />
-            <Route path='*' element={<PageNotFound to='/signin' replace />} />
-          </Routes >
-          {routesWithFooter.includes(window.location.pathname) &&
-            !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
-        </div>
+                />
+              } />
+              <Route path='/profile' element={
+                <ProtectedRoute
+                  element={Profile}
+                  isLoggedIn={isLoggedIn}
+                  onUpdateUser={handleUpdateUser}
+                  setLoggedIn={setLoggedIn}
+                  logOut={handleLogout}
+                  />
+              } />
+              <Route path='/signup' element={<Register handleRegisterSubmit={handleRegisterSubmit} />} />
+              <Route path='/signin' element={<Login handleLoginSubmit={handleLoginSubmit} />} />
+              <Route path='*' element={<PageNotFound to='/signin' replace />} />
+            </Routes >
+            {routesWithFooter.includes(window.location.pathname) &&
+              !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
+          </div>
+        </SavedMoviesProvider>
       </CurrentUserContext.Provider>
     </AppContext.Provider>
   );
