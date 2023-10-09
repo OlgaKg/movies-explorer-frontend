@@ -45,3 +45,13 @@ export const getContent = () => {
         credentials: 'include',
     })
 };
+
+export const logout = () => {
+    return request(`signout`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    })
+};

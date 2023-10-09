@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { logout } from '../../utils/auth';
 
-function Profile({onUpdateUser, setLoggedIn, logOut }) {
+function Profile({onUpdateUser, setLoggedIn}) {
     const currentUser = useContext(CurrentUserContext);
     const user = currentUser;
 
@@ -48,6 +49,19 @@ function Profile({onUpdateUser, setLoggedIn, logOut }) {
     //     navigate('/');
 
     // };
+
+    const signOut = () => {
+        logout()
+          .then(() => {
+            // onUpdateUser({});
+            setLoggedIn(false);
+            localStorage.removeItem('isLoggedIn'); 
+            navigate('/', { replace: true });
+          })
+          .catch((err) => {
+            console.error('Ошибка при выходе из аккаунта:', err);
+          });
+      };
 
     return (
         <main className='main-account'>
@@ -110,7 +124,7 @@ function Profile({onUpdateUser, setLoggedIn, logOut }) {
                                 <button onClick={handleEditClick} className='profile__edit-button'>
                                     Редактировать
                                 </button>
-                                <button onClick={logOut} className='profile__logout-button'>
+                                <button onClick={signOut} className='profile__logout-button'>
                                     Выйти из аккаунта
                                 </button>
                             </>

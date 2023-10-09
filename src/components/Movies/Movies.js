@@ -3,20 +3,20 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getMovies } from '../../utils/MoviesApi';
-import { useSavedMovies } from '../../contexts/SavedMoviesContext';
 
-function Movies() {
-  const { savedMovies } = useSavedMovies();// add context
+function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
   const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
   const [shortMovies, setShortMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    handleGetFilteredMovies()
-    filterShortMovies()
-  }, [searchMovie, isShortMovie])
+ useEffect(() => {
+  if (searchMovie) { // Загружать данные только если есть поисковой запрос
+    handleGetFilteredMovies();
+    filterShortMovies();
+  }
+}, [searchMovie, isShortMovie]);
 
 
   const handleSearchSubmit = (e) => {
@@ -67,9 +67,13 @@ function Movies() {
           shortFilm={isShortMovie} />
         {isLoading &&
           <Preloader />}
-        <MoviesCardList movies={isShortMovie ? shortMovies : filteredMovies}
+        <MoviesCardList
+          moviesCards={isShortMovie ? shortMovies : filteredMovies}
           isSavedPage={false}
-          savedMovies={savedMovies} />
+          savedMovies={savedMovies}
+          handleMovieDelete={handleMovieDelete}
+          handleMovieSave={handleMovieSave}
+  />
       </div>
     </section>
   );

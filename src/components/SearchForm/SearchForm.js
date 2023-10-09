@@ -10,6 +10,12 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
         setSearchMovie(searchMovieString);
     };
 
+    // const handleSearchInputBlur = () => {
+    //     if (!searchMovie) {
+    //       setSearchMovie(''); // Установка пустой строки при потере фокуса
+    //     }
+    //   };
+
     return (
         <>
             <form className='search-form' name='form-search-film' onSubmit={handleSearchSubmit}>
@@ -23,6 +29,7 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
                             name='searchFilm'
                             value={searchMovie}
                             onChange={handleSearchInputChange}
+                            // onBlur={handleSearchInputBlur}
                         />
                     </div>
                     <button type='submit' className='search-form__button'>

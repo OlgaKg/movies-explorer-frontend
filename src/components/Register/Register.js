@@ -61,7 +61,10 @@ function Register({ handleRegisterSubmit }) {
                     <img src={logo} alt='Логотип дипломного проекта' />
                 </Link>
                 <h2 className='auth__title'>Добро пожаловать!</h2>
-                <form className='auth__form auth__form_auth' name='form-register' onSubmit={handleSubmit} noValidate>
+                <form className='auth__form auth__form_auth'
+                name='form-register'
+                onSubmit={handleSubmit}
+                noValidate>
                     <label className='auth__label'>Имя
                         <input className='auth__input auth__input-name' name='name' type='text'
                             minLength='2'
