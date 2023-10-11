@@ -5,6 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getMovies } from '../../utils/MoviesApi';
 
 function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
+  console.log('filteredMovies in Movies:', filteredMovies);
   console.log('savedMovies in Movies:', savedMovies);
   const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
   const [shortMovies, setShortMovies] = useState([]);

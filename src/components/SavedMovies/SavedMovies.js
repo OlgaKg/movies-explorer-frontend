@@ -5,7 +5,8 @@ import Preloader from '../Preloader/Preloader';
 import mainApi from '../../utils/MainApi';
 
 function SavedMovies({ handleMovieDelete, savedMovies }) {
-  console.log('savedMovies in SavedMovies:', savedMovies); 
+  console.log('filteredMovies in SavedMovies:', filteredMovies);
+  console.log('savedMovies in SavedMovies:', savedMovies);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || ''); 
   const [shortFilm, setShortFilm] = useState(false);
