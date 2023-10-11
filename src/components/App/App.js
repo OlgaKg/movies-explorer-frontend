@@ -22,7 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(null);
+  // const [email, setEmail] = useState(null);/
   
 
 
@@ -41,7 +41,7 @@ function App() {
 
   function checkToken() {
     setIsLoading(true);
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn'); // Получить информацию об авторизации
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
     if (storedIsLoggedIn === 'true') {
       auth.getContent()
         .then((response) => {

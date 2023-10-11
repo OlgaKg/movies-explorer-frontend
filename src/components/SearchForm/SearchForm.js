@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
+    
     const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
 
     const handleSearchInputChange = (e) => {
         const searchMovieString = e.target.value;
 
         setSearchMovie(searchMovieString);
+        console.log("searchMovie:", searchMovieString);
     };
 
     // const handleSearchInputBlur = () => {
