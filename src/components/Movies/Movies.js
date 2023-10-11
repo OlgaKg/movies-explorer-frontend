@@ -5,9 +5,9 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getMovies } from '../../utils/MoviesApi';
 
 function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
-  console.log('filteredMovies in Movies:', filteredMovies);
   console.log('savedMovies in Movies:', savedMovies);
   const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
+  console.log('filteredMovies in Movies:', filteredMovies);
   const [shortMovies, setShortMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [isShortMovie, setIsShortMovie] = useState(false);
