@@ -56,13 +56,9 @@ function App() {
   }
 
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      setLoggedIn(true);
-    }
     checkToken();
     // eslint-disable-next-line
-  }, []);
+}, []);
 
 
   useEffect(() => {
