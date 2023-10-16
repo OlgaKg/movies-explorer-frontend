@@ -31,6 +31,7 @@ class MainApi {
     updateUserData(data) {
         return this._request(`users/me`, {
             method: 'PATCH',
+            credentials: true,
             headers: this._headers,
             body: JSON.stringify({
                 email: data.email,
@@ -50,6 +51,7 @@ class MainApi {
     saveMovie(info) {
         return this._request('movies', {
           method: 'POST',
+          credentials: true,
           headers: this._headers,
           body: JSON.stringify({
             country: info.country,
@@ -57,9 +59,9 @@ class MainApi {
             duration: info.duration,
             year: info.year,
             description: info.description,
-            image: 'https://api.nomoreparties.co' + info.image.url,
+            image: `https://api.nomoreparties.co${info.image.url}`,
             trailerLink: info.trailerLink,
-            thumbnail: 'https://api.nomoreparties.co' +  info.image.formats.thumbnail.url,
+            thumbnail: `https://api.nomoreparties.co${info.image.formats.thumbnail.url}`,
             movieId: info.id,
             nameRU: info.nameRU,
             nameEN: info.nameEN,
@@ -70,6 +72,7 @@ class MainApi {
     deleteMovie(idMovie) {
         return this._request(`movies/${idMovie}`, {
             method: 'DELETE',
+            credentials: true,
             headers: this._headers
         })
     }

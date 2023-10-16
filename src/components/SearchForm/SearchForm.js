@@ -3,7 +3,9 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
     
-    const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
+    const pageKey = window.location.pathname === '/movies' ? 'searchMovieString' : 'searchMoviesSavedString';
+    
+    const [searchMovie, setSearchMovie] = useState(localStorage.getItem(pageKey) || '');
 
     const handleSearchInputChange = (e) => {
         const searchMovieString = e.target.value;

@@ -6,7 +6,7 @@
     position: relative;
     margin-bottom: 13px;
     cursor: pointer;
-    width: calc(33.33% - 20px);
+    max-width: 360px;
 }
 
 .movies-card__save-button {
@@ -122,9 +122,8 @@ img.movies-card__image {
 
 @media screen and (max-width:768px) {
     .movies-card {
-        width: calc(50% - 15px);
+        max-width: 330px;
     }
-
     .movies-card__title {
         margin: 22px 0 0;
     }
@@ -139,6 +138,7 @@ img.movies-card__image {
         margin-left: auto;
         margin-right: auto;
         width: 100%;
+        max-width: 300px;
     }
 
     .movies-card__save-button {

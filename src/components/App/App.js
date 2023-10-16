@@ -10,6 +10,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Profile from '../Profile/Profile';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AppContext } from '../../contexts/AppContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
@@ -22,9 +23,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInfoTooltip, setInfoTooltip] = useState(false);
+  const [isRegisterPopupOpen, setRegisterPopupOpen] = useState(false);
   // const [email, setEmail] = useState(null);/
-  
-
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,36 +35,35 @@ function App() {
   const excludeFooterRoutes = ['/signin', '/signup', '*'];
   const isExcludedFromFooter = excludeFooterRoutes.includes(currentPage);
 
+  function checkToken() {
+    setIsLoading(true);
+    auth.getContent()
+      .then((response) => {
+        if (!response) {
+          setLoggedIn(false);
+        } else {
+          navigate(location.pathname);
+          setLoggedIn(true);
+          setCurrentUser(response);
+        }
+      })
+      .catch(() => {
+        setLoggedIn(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
   useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    if (storedIsLoggedIn === 'true') {
+      setLoggedIn(true);
+    }
     checkToken();
     // eslint-disable-next-line
   }, []);
 
-  function checkToken() {
-    setIsLoading(true);
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      auth.getContent()
-        .then((response) => {
-          if (!response) {
-            return;
-          }
-          navigate(location.pathname);
-          setLoggedIn(true);
-          // setEmail(response.email);//возможно это не нужно
-          setCurrentUser(response);
-        })
-        .catch(() => {
-          setLoggedIn(false);
-          // setEmail(null); //возможно это не нужно
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -97,10 +97,12 @@ function App() {
     setIsLoading(true);
     auth.registerUser(name, email, password)
       .then(() => {
-        navigate('/movies', { replace: true });
+        setRegisterPopupOpen(true);
+        setInfoTooltip(true);
+        handleLoginSubmit(email);
       }).catch((err) => {
-        // setInfoTooltip(false);
-        console.log(err)
+        setInfoTooltip(false);
+        console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -163,8 +165,13 @@ function App() {
       });
   }
 
+  function closePopup() {
+    setIsLoading(false);
+    setRegisterPopupOpen(false)
+}
+
   return (
-    <AppContext.Provider value={{ isLoading }}>
+    <AppContext.Provider value={{ isLoading, closePopup }}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className='App'>
           {isExcludedFromFooter ? null :
@@ -216,16 +223,16 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 handleLoginSubmit={handleLoginSubmit} />} />
             <Route path='*'
-              element={<PageNotFound to='/signin' replace />} />
+              element={<PageNotFound to='/signin' replace isLoggedIn={isLoggedIn} />} />
           </Routes >
           {routesWithFooter.includes(window.location.pathname) &&
             !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
-          {/* <InfoTooltip
-              isOpen={isRegisterPopupOpen}
-              registerStatus={isInfoTooltip}
-              successMessage="Вы успешно зарегистрировались!"
-              failureMessage="Что-то пошло не так! Попробуйте еще раз."
-            /> */}
+          <InfoTooltip
+            isOpen={isRegisterPopupOpen}
+            registerStatus={isInfoTooltip}
+            successMessage="Вы успешно зарегистрировались!"
+            failureMessage="Что-то пошло не так! Попробуйте еще раз."
+          />
         </div>
       </CurrentUserContext.Provider>
     </AppContext.Provider>
