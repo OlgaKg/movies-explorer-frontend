@@ -17,7 +17,6 @@ const formatDuration = (minutes) => {
 
 function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSave, savedMovies }) {
   const { nameRU, nameEN, duration, image, trailerLink } = moviesCard;
-  // console.log('moviesCard:', moviesCard);
   const [isHovered, setIsHovered] = useState(false);
   const defaultsaved = savedMovies.filter((savedMovie) => savedMovie.movieId === moviesCard.id).length > 0;
   const [isSaved, setIsSaved] = useState(defaultsaved);
@@ -26,10 +25,10 @@ function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSav
 
   function onMovieCardClick() {
     if (isSaved) {
-      handleMovieDelete(moviesCard, setIsSaved);
+      handleMovieDelete(moviesCard);
       setIsSaved(false); // это закоментировано в AApp.js
     } else {
-      handleMovieSave(moviesCard, isSaved, setIsSaved);
+      handleMovieSave(moviesCard);
       setIsSaved(true); // это закоментировано в AApp.js
     }
   }

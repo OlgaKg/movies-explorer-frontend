@@ -43,7 +43,7 @@ function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDele
             moviesCards={moviesCards}
             handleMovieDelete={handleMovieDelete}
             handleMovieSave={handleMovieSave}
-            isSavedPage={isSavedPage}
+            isSavedPage={savedMovies.some((item) => item.nameEN === movieCard.nameEN)}
             savedMovies={savedMovies}
             cardsPerRow={cardsPerRow}
           />

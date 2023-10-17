@@ -1,36 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
-import mainApi from '../../utils/MainApi';
 
-function SavedMovies({ handleMovieDelete, savedMovies }) {
-  console.log('savedMovies in SavedMovies:', savedMovies);
+function SavedMovies({ handleMovieDelete, savedMovies, isLoading }) {
   const [filteredMovies, setFilteredMovies] = useState(savedMovies);
-  console.log('filteredMovies in SavedMovies:', filteredMovies);
-  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || ''); 
+
+  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [shortFilm, setShortFilm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setIsLoading(true);
-    mainApi.getSavedMovies()
-      .then((moviesCards) => {
-        console.log('Список сохраненных фильмов:', moviesCards);
-        setFilteredMovies(moviesCards);
-      })
-      .catch(err => {
-        console.error(err);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  useEffect(() => {
-    filterMovies();
-  }, [savedMovies, searchMovie, shortFilm]);
-
-
-  const filterMovies = () => {
+  const filterMovies = useCallback(() => {
     let filtered = savedMovies;
 
     if (searchMovie) {
@@ -48,7 +27,11 @@ function SavedMovies({ handleMovieDelete, savedMovies }) {
     }
 
     setFilteredMovies(filtered);
-  };
+  }, [savedMovies, searchMovie, shortFilm]);
+
+  useEffect(() => {
+    filterMovies();
+  }, [filterMovies]);
 
   const handleSearchInputChange = (e) => {
     const searchMovieString = e.target.value;
@@ -57,7 +40,7 @@ function SavedMovies({ handleMovieDelete, savedMovies }) {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-  
+
     const searchMovieString = e.target.querySelector('input').value;
     setSearchMovie(searchMovieString);
     localStorage.setItem('searchMovieStringSavedMovies', searchMovieString);

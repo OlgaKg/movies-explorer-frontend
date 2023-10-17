@@ -11,14 +11,7 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
         const searchMovieString = e.target.value;
 
         setSearchMovie(searchMovieString);
-        console.log("searchMovie:", searchMovieString);
     };
-
-    // const handleSearchInputBlur = () => {
-    //     if (!searchMovie) {
-    //       setSearchMovie(''); // Установка пустой строки при потере фокуса
-    //     }
-    //   };
 
     return (
         <>

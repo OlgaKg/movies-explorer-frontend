@@ -15,7 +15,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AppContext } from '../../contexts/AppContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
-import { getMovies } from '../../utils/MoviesApi';
 import * as auth from '../../utils/auth';
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isInfoTooltip, setInfoTooltip] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupOpen] = useState(false);
-  // const [email, setEmail] = useState(null);/
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,7 +76,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     if (isLoggedIn) {
-      getMovies()
+      mainApi.getSavedMovies()
         .then((moviesData) => {
           setSavedMovies(moviesData);
         })
@@ -129,32 +127,20 @@ function App() {
     handleSubmit(makeRequest);
   }
 
-  function handleMovieSave(movieCard, isSaved, setIsSaved) {
-    if (!isSaved)
+  function handleMovieSave(movieCard) {
       mainApi.saveMovie(movieCard)
         .then((newMovieCard) => {
           setSavedMovies([newMovieCard, ...savedMovies]);
-          // setIsSaved(true);
         })
         .catch((err) => {
           console.log(err);
         })
   }
 
-  function handleMovieDelete(movie, setIsSaved) {
-    console.log('handleMovieDelete вызван')
-    const savedMovie = savedMovies.find(
-      (movieCard) => movieCard.movieId === movie.id || movieCard.movieId === movie.movieId
-    );
-    if (!savedMovie) {
-      return;
-    }
-    mainApi.deleteMovie(savedMovie._id)
+  function handleMovieDelete(movie) {
+    mainApi.deleteMovie(movie._id)
       .then(() => {
-        setSavedMovies(savedMovies.filter((item) => item._id !== savedMovie._id));
-        // setIsSaved(false);
-        console.log('Обновленное состояние savedMovies:', savedMovies);
-        console.log('savedMovie успешно удален');
+        setSavedMovies(savedMovies.filter((item) => item._id !== movie._id));
       })
       .catch((err) => {
         console.log(err);
