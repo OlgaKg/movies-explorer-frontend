@@ -18,28 +18,28 @@ const formatDuration = (minutes) => {
 function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSave, savedMovies }) {
   const { nameRU, nameEN, duration, image, trailerLink } = moviesCard;
   const [isHovered, setIsHovered] = useState(false);
-  const defaultsaved = savedMovies.filter((savedMovie) => savedMovie.movieId === moviesCard.id).length > 0;
-  const [isSaved, setIsSaved] = useState(defaultsaved);
+  // const defaultsaved = savedMovies.filter((savedMovie) => savedMovie.movieId === moviesCard.id).length > 0;
+  // const [isSaved, setIsSaved] = useState(defaultsaved);
   // const [isSaved, setIsSaved] = useState(savedMovies.filter((savedMovie) => savedMovie.movieId === moviesCard.id).length > 0);
   const MOVIE_API_URL = 'https://api.nomoreparties.co';
 
-  function onMovieCardClick() {
-    if (isSaved) {
-      handleMovieDelete(moviesCard);
-      setIsSaved(false); // это закоментировано в AApp.js
-    } else {
-      handleMovieSave(moviesCard);
-      setIsSaved(true); // это закоментировано в AApp.js
-    }
-  }
+  // function onMovieCardClick() {
+  //   if (isSavedPage) {
+  //     handleMovieDelete(moviesCard);
+  //     // setIsSaved(false);
+  //   } else {
+  //     handleMovieSave(moviesCard);
+  //     // setIsSaved(true);
+  //   }
+  // }
 
-  useEffect(() => {
-    setIsSaved(savedMovies.some(savedMovie => savedMovie.movieId === moviesCard.id));
-  }, [moviesCard, savedMovies]);
+  // useEffect(() => {
+  //   setIsSaved(savedMovies.some(savedMovie => savedMovie.movieId === moviesCard.id));
+  // }, [moviesCard, savedMovies]);
 
-  function onMovieDelete() {
-    handleMovieDelete(moviesCard);
-  }
+  // function onMovieDelete() {
+  //   handleMovieDelete(moviesCard);
+  // }
 
   return (
     <article
@@ -50,32 +50,30 @@ function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSav
       <Link href={trailerLink} target='_blank' rel='noopener noreferrer'>
         <img
           className='movies-card__image'
-          key={moviesCard.id} // может _id?
+          key={moviesCard.id}
           src={isSavedPage ? `${image}` : `${MOVIE_API_URL}${image.url}`}
           alt={`${nameRU} (${nameEN})`}
         />
       </Link>
       {isSavedPage ? (
-        isHovered ? (
-          <button
-            className='movies-card__remove-button'
-            onClick={onMovieDelete}
-          // disabled={isSaving}
-          >
-            &#215;
-          </button>
-        ) : null
-      ) : (
         <button
-          className={`movies-card__save-button ${isSaved ? 'movies-card__save-button_saved' : ''}`}
-          onClick={isSaved ? onMovieDelete : onMovieCardClick}
+          className='movies-card__remove-button'
+          onClick={() => handleMovieDelete(moviesCard._id ? moviesCard : savedMovies.find(item => moviesCard.id === item.movieId))}
         // disabled={isSaving}
         >
-          {isSaved ? (
-            <div className='movies-card__saved-icon'>&#10003;</div>
-          ) : (
-            <div className='movies-card__save-btn'>Сохранить</div>
-          )}
+          &#215;
+        </button>
+      ) : (
+        <button
+          // className={`movies-card__save-button ${isSaved ? 'active' : ''}`}
+          className={`movies-card__save-button`}
+          onClick={() => handleMovieSave(moviesCard)}
+        // disabled={isSaving}
+        >
+          {/* {isSaved ? <>&#10003;</> : 'Сохранить'} */}
+          {/* //   <div className='movies-card__saved-icon'>&#10003;</div> */}
+          <div className='movies-card__save-btn'>Сохранить</div>
+
         </button>
       )}
       <div className='movies-card__info'>

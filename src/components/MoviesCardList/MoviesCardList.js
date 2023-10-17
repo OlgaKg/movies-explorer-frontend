@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDelete, handleMovieSave }) {
+function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDelete, handleMovieSave, isConnectionError, isNotFoundMovies, isLoading }) {
   const [cardsPerRow, setCardsPerRow] = useState(4);
   const [visibleMovies, setVisibleMovies] = useState(12);
 
@@ -35,6 +36,9 @@ function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDele
 
   return (
     <section className='movies-card-list'>
+      {isNotFoundMovies && !isLoading && (<ErrorMessage message={'Ничего не найдено'} />)}
+      {isConnectionError && !isLoading && (<ErrorMessage message=
+        {'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'} />)}
       <div className='movies-card-list__content'>
         {moviesCards.slice(0, visibleMovies).map((movieCard) => (
           <MoviesCard

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+// import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'; 
 
 function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
-    
     const pageKey = window.location.pathname === '/movies' ? 'searchMovieString' : 'searchMoviesSavedString';
-    
     const [searchMovie, setSearchMovie] = useState(localStorage.getItem(pageKey) || '');
 
     const handleSearchInputChange = (e) => {
@@ -26,7 +25,6 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
                             name='searchFilm'
                             value={searchMovie}
                             onChange={handleSearchInputChange}
-                            // onBlur={handleSearchInputBlur}
                         />
                     </div>
                     <button type='submit' className='search-form__button'>

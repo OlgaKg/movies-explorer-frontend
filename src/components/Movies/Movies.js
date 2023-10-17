@@ -8,27 +8,27 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFetchedMovies, setHasFetchedMovies] = useState(false);
   const prevSearchMovieRef = useRef('');
   const [movies, setMovies] = useState([]);
+  const [isConnectionError, setConnectionError] = useState(false);
+  const [isNotFoundMovies, setIsNotFoundovies] = useState(false);
 
   useEffect(() => {
-    if (!hasFetchedMovies) {
-      setIsLoading(true);
-      getMovies()
-        .then((allMovies) => {
-          setMovies(allMovies);
-          localStorage.setItem('filteredMovies', JSON.stringify(allMovies));
-        })
-        .catch((error) => {
-          console.error('Ошибка при загрузке фильмов:', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          setHasFetchedMovies(true);
-        });
-    }
-  }, [hasFetchedMovies]);
+    setIsLoading(true);
+    getMovies()
+      .then((allMovies) => {
+        setMovies(allMovies);
+        localStorage.setItem('filteredMovies', JSON.stringify(allMovies));
+        setConnectionError(false);
+      })
+      .catch((error) => {
+        setConnectionError(true);
+        console.error('Ошибка при загрузке фильмов:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   const handleGetFilteredMovies = useCallback(() => {
     if (searchMovie.length === 0) {
@@ -45,7 +45,7 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
                 movie.nameEN.toLowerCase().includes(searchMovie.toLowerCase()))
             );
           });
-          
+
           const moviesWithSavedFlag = filteredApiMovies.map((movie) => ({
             ...movie,
             isSaved: savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId),
@@ -99,6 +99,8 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
           savedMovies={savedMovies}
           handleMovieDelete={handleMovieDelete}
           handleMovieSave={handleMovieSave}
+          isConnectionError={isConnectionError}
+          isNotFoundMovies={isNotFoundMovies}
         />
       </div>
     </section>

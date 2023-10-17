@@ -36,7 +36,7 @@
     display: block;
 }
 
-.movies-card__save-button_saved {
+.movies-card__save-button:active {
     display: block;
     background-color: #FF4062;
     color: #fff;
