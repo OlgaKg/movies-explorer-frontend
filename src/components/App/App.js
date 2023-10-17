@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line
-}, []);
+  }, []);
 
 
   useEffect(() => {
@@ -82,8 +82,8 @@ function App() {
         })
         .catch(err => {
           console.error(err)
-            .finally(() => setIsLoading(false));
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [isLoggedIn]);
 
@@ -128,13 +128,13 @@ function App() {
   }
 
   function handleMovieSave(movieCard) {
-      mainApi.saveMovie(movieCard)
-        .then((newMovieCard) => {
-          setSavedMovies([newMovieCard, ...savedMovies]);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+    mainApi.saveMovie(movieCard)
+      .then((newMovieCard) => {
+        setSavedMovies([newMovieCard, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleMovieDelete(movie) {
@@ -150,7 +150,7 @@ function App() {
   function closePopup() {
     setIsLoading(false);
     setRegisterPopupOpen(false)
-}
+  }
 
   return (
     <AppContext.Provider value={{ isLoading, closePopup }}>

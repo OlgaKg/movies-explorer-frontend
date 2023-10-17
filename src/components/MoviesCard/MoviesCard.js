@@ -51,7 +51,7 @@ function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSav
         <img
           className='movies-card__image'
           key={moviesCard.id}
-          src={isSavedPage ? `${image}` : `${MOVIE_API_URL}${image.url}`}
+          src={typeof image === 'string' ? `${image}` : `${MOVIE_API_URL}${image.url}`}
           alt={`${nameRU} (${nameEN})`}
         />
       </Link>

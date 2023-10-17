@@ -8,10 +8,8 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
   const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const prevSearchMovieRef = useRef('');
   const [movies, setMovies] = useState([]);
   const [isConnectionError, setConnectionError] = useState(false);
-  const [isNotFoundMovies, setIsNotFoundovies] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,47 +29,46 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
   }, []);
 
   const handleGetFilteredMovies = useCallback(() => {
-    if (searchMovie.length === 0) {
-      return;
-    }
 
-    if (searchMovie !== prevSearchMovieRef.current) {
-      setIsLoading(true);
-      getMovies()
-        .then((apiMovies) => {
-          const filteredApiMovies = apiMovies.filter((movie) => {
+    setIsLoading(true);
+    getMovies()
+      .then((apiMovies) => {
+      let filteredApiMovies = apiMovies;
+
+        if (searchMovie.length > 0) {
+          filteredApiMovies = apiMovies.filter((movie) => {
             return (
               (movie.nameRU.toLowerCase().includes(searchMovie.toLowerCase()) ||
                 movie.nameEN.toLowerCase().includes(searchMovie.toLowerCase()))
             );
           });
+        }
 
-          const moviesWithSavedFlag = filteredApiMovies.map((movie) => ({
-            ...movie,
-            isSaved: savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId),
-          }));
+        const moviesWithSavedFlag = filteredApiMovies.map((movie) => ({
+          ...movie,
+          isSaved: savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId),
+        }));
 
-          setMovies(moviesWithSavedFlag);
-          localStorage.setItem('filteredMovies', JSON.stringify(filteredApiMovies));
-        })
-        .catch(err => {
-          console.error(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          prevSearchMovieRef.current = searchMovie;
-        });
-    }
+        setMovies(moviesWithSavedFlag);
+        localStorage.setItem('filteredMovies', JSON.stringify(filteredApiMovies));
+        setConnectionError(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setConnectionError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [searchMovie, savedMovies]);
 
   useEffect(() => {
     if (isShortMovie) {
-      const shortFilteredMovies = movies.filter(movie => movie.duration <= 40);
-      setMovies(shortFilteredMovies);
+      setMovies((movies) => movies.filter(movie => movie.duration <= 40));
     } else {
       handleGetFilteredMovies();
     }
-  }, [isShortMovie, movies, handleGetFilteredMovies]);
+  }, [isShortMovie, handleGetFilteredMovies]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -100,7 +97,7 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
           handleMovieDelete={handleMovieDelete}
           handleMovieSave={handleMovieSave}
           isConnectionError={isConnectionError}
-          isNotFoundMovies={isNotFoundMovies}
+          isNotFoundMovies={movies.length === 0}
         />
       </div>
     </section>
