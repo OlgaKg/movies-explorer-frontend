@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDelete, handleMovieSave, isConnectionError, isNotFoundMovies, isLoading }) {
-  const [cardsPerRow, setCardsPerRow] = useState(4);
+  const [cardsPerRow, setCardsPerRow] = useState(3);
   const [visibleMovies, setVisibleMovies] = useState(12);
 
   const loadMore = () => {
@@ -42,14 +42,12 @@ function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDele
       <div className='movies-card-list__content'>
         {moviesCards.slice(0, visibleMovies).map((movieCard) => (
           <MoviesCard
-            key={isSavedPage ? movieCard._id : movieCard.id}
+            key={movieCard.id ? movieCard.id : movieCard._id}
             moviesCard={movieCard}
-            moviesCards={moviesCards}
             handleMovieDelete={handleMovieDelete}
             handleMovieSave={handleMovieSave}
             isSavedPage={savedMovies.some((item) => item.nameEN === movieCard.nameEN)}
             savedMovies={savedMovies}
-            cardsPerRow={cardsPerRow}
           />
         ))}
       </div>

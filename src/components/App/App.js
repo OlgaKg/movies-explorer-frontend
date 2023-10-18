@@ -91,8 +91,6 @@ function App() {
     setIsLoading(true);
     auth.registerUser(name, email, password)
       .then(() => {
-        setRegisterPopupOpen(true);
-        setInfoTooltip(true);
         handleLoginSubmit(email);
       }).catch((err) => {
         setInfoTooltip(false);
@@ -106,7 +104,6 @@ function App() {
   const handleLoginSubmit = (email) => {
     setIsLoading(true);
     setLoggedIn(true);
-    // setEmail(email);
     navigate('/movies', { replace: true });
   }
 
@@ -121,7 +118,13 @@ function App() {
     function makeRequest() {
       return mainApi.updateUserData(inputValues)
         .then((updatedUserData) => {
+          setRegisterPopupOpen(true);
           setCurrentUser(updatedUserData);
+          setInfoTooltip(true);
+        })
+        .catch((error) => {
+          console.error("Произошла ошибка при обновлении данных:", error);
+          setInfoTooltip(false);
         });
     }
     handleSubmit(makeRequest);
@@ -194,7 +197,6 @@ function App() {
                 onUpdateUser={handleUpdateUser}
                 setCurrentUser={setCurrentUser}
                 setLoggedIn={setLoggedIn}
-              // signOut={handleLogout}
               />
             } />
             <Route path='/signup'
@@ -212,7 +214,7 @@ function App() {
           <InfoTooltip
             isOpen={isRegisterPopupOpen}
             registerStatus={isInfoTooltip}
-            successMessage="Вы успешно зарегистрировались!"
+            successMessage="Редактирование данных прошло успешно!"
             failureMessage="Что-то пошло не так! Попробуйте еще раз."
           />
         </div>

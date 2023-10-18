@@ -1,34 +1,20 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getMovies } from '../../utils/MoviesApi';
 
 function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
-  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
+  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || undefined);
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [isConnectionError, setConnectionError] = useState(false);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getMovies()
-      .then((allMovies) => {
-        setMovies(allMovies);
-        localStorage.setItem('filteredMovies', JSON.stringify(allMovies));
-        setConnectionError(false);
-      })
-      .catch((error) => {
-        setConnectionError(true);
-        console.error('Ошибка при загрузке фильмов:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
   const handleGetFilteredMovies = useCallback(() => {
+    if(searchMovie === undefined) {
+      return
+    }
 
     setIsLoading(true);
     getMovies()
@@ -44,12 +30,11 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
           });
         }
 
-        const moviesWithSavedFlag = filteredApiMovies.map((movie) => ({
-          ...movie,
-          isSaved: savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId),
-        }));
+        if (isShortMovie) {
+          filteredApiMovies = filteredApiMovies.filter((movie) => movie.duration <= 40);
+        }
 
-        setMovies(moviesWithSavedFlag);
+        setMovies(filteredApiMovies);
         localStorage.setItem('filteredMovies', JSON.stringify(filteredApiMovies));
         setConnectionError(false);
       })
@@ -60,22 +45,11 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [searchMovie, savedMovies]);
+  }, [isShortMovie, searchMovie]);
 
   useEffect(() => {
-    if (isShortMovie) {
-      setMovies((movies) => movies.filter(movie => movie.duration <= 40));
-    } else {
-      handleGetFilteredMovies();
-    }
-  }, [isShortMovie, handleGetFilteredMovies]);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const searchMovieString = e.target.querySelector('input').value;
-    setSearchMovie(searchMovieString);
-    localStorage.setItem('searchMovieString', searchMovieString);
-  };
+    handleGetFilteredMovies()
+  }, [handleGetFilteredMovies]);
 
   const handleCheckboxChange = () => {
     setIsShortMovie(!isShortMovie);
@@ -86,8 +60,10 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
       <div className='movies__container'>
         <SearchForm
           handleCheckboxChange={handleCheckboxChange}
-          handleSearchSubmit={handleSearchSubmit}
+          setSearchMovie={setSearchMovie}
+          searchMovie={searchMovie}
           shortFilm={isShortMovie}
+          storageKey="searchMovieString"
         />
         {isLoading && <Preloader />}
         <MoviesCardList

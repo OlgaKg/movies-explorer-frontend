@@ -6,7 +6,7 @@ import Preloader from '../Preloader/Preloader';
 function SavedMovies({ handleMovieDelete, savedMovies, isLoading }) {
   const [filteredMovies, setFilteredMovies] = useState(savedMovies);
 
-  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMovieString') || '');
+  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMoviesSavedString') || '');
   const [shortFilm, setShortFilm] = useState(false);
 
   const filterMovies = useCallback(() => {
@@ -33,19 +33,6 @@ function SavedMovies({ handleMovieDelete, savedMovies, isLoading }) {
     filterMovies();
   }, [filterMovies]);
 
-  const handleSearchInputChange = (e) => {
-    const searchMovieString = e.target.value;
-    setSearchMovie(searchMovieString);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-
-    const searchMovieString = e.target.querySelector('input').value;
-    setSearchMovie(searchMovieString);
-    localStorage.setItem('searchMovieStringSavedMovies', searchMovieString);
-  };
-
   const handleCheckboxChange = () => {
     setShortFilm(!shortFilm);
   };
@@ -55,8 +42,9 @@ function SavedMovies({ handleMovieDelete, savedMovies, isLoading }) {
       <div className='saved-movies__content'>
         <SearchForm
           handleCheckboxChange={handleCheckboxChange}
-          handleSearchInputChange={handleSearchInputChange}
-          handleSearchSubmit={handleSearchSubmit}
+          setSearchMovie={setSearchMovie}
+          searchMovie={searchMovie}
+          storageKey="searchMoviesSavedString"  
           shortFilm={shortFilm}
         />
         {isLoading && <Preloader />}

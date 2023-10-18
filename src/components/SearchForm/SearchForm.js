@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 // import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'; 
 
-function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
-    const pageKey = window.location.pathname === '/movies' ? 'searchMovieString' : 'searchMoviesSavedString';
-    const [searchMovie, setSearchMovie] = useState(localStorage.getItem(pageKey) || '');
+function SearchForm({ shortFilm, handleCheckboxChange, setSearchMovie, searchMovie, storageKey }) {
+    const [inputValue, setInputValue] = useState(searchMovie);
 
-    const handleSearchInputChange = (e) => {
-        const searchMovieString = e.target.value;
+    const onSubmit = useCallback((e) => {
+        e.preventDefault();
 
-        setSearchMovie(searchMovieString);
-    };
+        localStorage.setItem(storageKey, inputValue);
+        setSearchMovie(inputValue);
+    }, [inputValue, storageKey, setSearchMovie]);
 
     return (
         <>
-            <form className='search-form' name='form-search-film' onSubmit={handleSearchSubmit}>
+            <form className='search-form' name='form-search-film' onSubmit={onSubmit}>
                 <div className='search-form__container'>
                     <div className='search-form__input'>
                         <div className='search-form__search-icon'></div>
@@ -23,8 +23,8 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
                             type='text'
                             placeholder='Фильм'
                             name='searchFilm'
-                            value={searchMovie}
-                            onChange={handleSearchInputChange}
+                            value={inputValue}
+                            onChange={e => setInputValue(e.target.value)}
                         />
                     </div>
                     <button type='submit' className='search-form__button'>
@@ -36,7 +36,7 @@ function SearchForm({ shortFilm, handleCheckboxChange, handleSearchSubmit }) {
                     <label htmlFor='shortFilm' className='search-form__filter-label'>Короткометражки</label>
                 </div>
             </form>
-            {searchMovie.length === 0 && <div className='search-form__error'>Пожалуйста введите текст запроса</div>}
+            {searchMovie && searchMovie.length === 0 ? <div className='search-form__error'>Пожалуйста введите текст запроса</div> : null}
         </>
     );
 };

@@ -43,17 +43,9 @@ function Profile({onUpdateUser, setLoggedIn}) {
         setError(null);
     };
 
-    // const handleLogout = () => {
-    //     onUpdateUser({});
-    //     setLoggedIn(false);
-    //     navigate('/');
-
-    // };
-
     const signOut = () => {
         logout()
           .then(() => {
-            // onUpdateUser({});
             setLoggedIn(false);
             localStorage.removeItem('isLoggedIn'); 
             navigate('/', { replace: true });
