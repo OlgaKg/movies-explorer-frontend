@@ -79,8 +79,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    baseUrl: 'http://localhost:4000',
-    // baseUrl: 'https://api.ypmesto.nomoreparties.co',
+    // baseUrl: 'http://localhost:3002',
+    baseUrl: 'https://api.dpmovie.nomoredomainsicu.ru',
     headers: {
         'Content-Type': 'application/json'
     }
