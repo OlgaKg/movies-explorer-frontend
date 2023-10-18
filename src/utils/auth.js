@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:4000';
-// export const BASE_URL = 'https://api.ypmesto.nomoreparties.co';
+// export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = 'https://api.dpmovie.nomoredomainsicu.ru';
 
 const checkReply = (res) => {
     if (res.ok) {
