@@ -1,4 +1,4 @@
-// export const BASE_URL = 'http://localhost:4000';
+// export const BASE_URL = 'http://localhost:3002';
 export const BASE_URL = 'https://api.dpmovie.nomoredomainsicu.ru';
 
 const checkReply = (res) => {

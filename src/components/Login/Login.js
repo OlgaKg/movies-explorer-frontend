@@ -76,7 +76,7 @@ function Login({ handleLoginSubmit }) {
                             {errorMessages.email && <span className='auth__input-error'>{errorMessages.email}</span>}                </label>
                         <label className='auth__label'>Пароль
                             <input className='auth__input auth__input-password' id='password' name='password' type='password'
-                                minLength='6'
+                                minLength='8'
                                 placeholder='Введите пароль'
                                 value={formValue.password}
                                 onChange={handleChange}

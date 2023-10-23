@@ -85,8 +85,8 @@ function Register({ handleRegisterSubmit }) {
                     </label>
                     <label className='auth__label'>Пароль
                         <input className='auth__input auth__input-password' id='password' name='password' type='password'
-                            minLength='6'
-                            placeholder='Введите пароль (мин. 6 символов)'
+                            minLength='8'
+                            placeholder='Введите пароль (мин. 8 символов)'
                             value={formValue.password}
                             onChange={handleChange}
                             required />
