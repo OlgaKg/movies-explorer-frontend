@@ -1,33 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
-export function useFormWithValidation(initialValues) {
-  const [values, setValues] = useState(initialValues || {});
+export function useFormWithValidation() {
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (event) => {
+  const validateForm = useCallback((formValues) => {
+    const errors = {};
+    if (formValues.name && formValues.name.length < 2) {
+      errors.name = 'Имя должно содержать минимум 2 символа';
+    }
+    if (formValues.email && !formValues.email.includes('@')) {
+      errors.email = 'Неверный формат email';
+    }
+    if (formValues.password && formValues.password.length < 8) {
+      errors.password = 'Пароль должен содержать минимум 8 символов';
+    }
+    
+    return errors;
+  }, []);
+
+  const handleChange = useCallback((event) => {
     const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
-  };
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
 
-  useEffect(() => {
-    const validateForm = () => {
-      const newErrors = {};
+    const newErrors = { ...errors, [name]: validateForm({ ...values, [name]: value })[name] };
+    setErrors(newErrors);
 
-      if (!values.name || values.name.length < 2) {
-        newErrors.name = 'Имя должно содержать минимум 2 символа';
-      }
-      if (!values.email || !values.email.includes('@')) {
-        newErrors.email = 'Неверный формат email';
-      }
+    setIsValid(event.target.closest('form').checkValidity());
+  }, [errors, validateForm, values]);
 
-      const isFormValid = Object.keys(newErrors).length === 0;
-      setErrors(newErrors);
-      setIsValid(isFormValid);
-    };
+  const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
+    setValues(newValues);
+    setErrors(newErrors);
+    setIsValid(newIsValid);
+  }, []);
 
-    validateForm();
-  }, [values]);
-
-  return { values, handleChange, errors, isValid, setValues };
+  return { values, handleChange, errors, isValid, resetForm };
 }

@@ -1,57 +1,15 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Register({ handleRegisterSubmit }) {
-    const [formValue, setFormValue] = useState({
-        name: '',
-        email: '',
-        password: ''
-    });
-    const [errorMessages, setErrorMessages] = useState({
-        name: '',
-        email: '',
-        password: ''
-    });
-
-    const handleChange = (evt) => {
-        const { name, value } = evt.target;
-        setFormValue({
-            ...formValue,
-            [name]: value
-        });
-
-        setErrorMessages({
-            ...errorMessages,
-            [name]: ''
-        });
-    }
+    const { values, handleChange, errors, isValid } = useFormWithValidation();
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        const { name, email, password } = formValue;
-
-        const validationErrors = validateForm();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrorMessages(validationErrors);
-            return;
-        }
+        const { name, email, password } = values;
 
         handleRegisterSubmit(name, email, password);
-    }
-
-    const validateForm = () => {
-        const errors = {};
-        if (formValue.name.length < 2) {
-            errors.name = 'Имя должно содержать минимум 2 символа';
-        }
-        if (!formValue.email.includes('@')) {
-            errors.email = 'Неверный формат email';
-        }
-        if (formValue.password.length < 6) {
-            errors.password = 'Пароль должен содержать минимум 6 символов';
-        }
-        return errors;
     }
 
     return (
@@ -61,39 +19,43 @@ function Register({ handleRegisterSubmit }) {
                     <img src={logo} alt='Логотип дипломного проекта' />
                 </Link>
                 <h2 className='auth__title'>Добро пожаловать!</h2>
-                <form className='auth__form auth__form_auth'
-                name='form-register'
-                onSubmit={handleSubmit}
-                noValidate>
+                <form
+                    className='auth__form auth__form_auth'
+                    name='form-register'
+                    onSubmit={handleSubmit}
+                    noValidate>
                     <label className='auth__label'>Имя
                         <input className='auth__input auth__input-name' name='name' type='text'
                             minLength='2'
                             maxLength='30'
                             placeholder='Введите имя'
-                            value={formValue.name}
+                            value={values.name || ''}
                             onChange={handleChange}
-                            required />
-                        {errorMessages.name && <span className='auth__input-error'>{errorMessages.name}</span>}
+                            required
+                        />
+                        {errors.name && <span className='auth__input-error'>{errors.name}</span>}
                     </label>
                     <label className='auth__label'>E-mail
                         <input className='auth__input auth__input-email' id='email' name='email' type='email'
                             placeholder='Введите email'
-                            value={formValue.email}
+                            value={values.email || ''}
                             onChange={handleChange}
-                            required />
-                        {errorMessages.email && <span className='auth__input-error'>{errorMessages.email}</span>}
+                            required
+                        />
+                        {errors.email && <span className='auth__input-error'>{errors.email}</span>}
                     </label>
                     <label className='auth__label'>Пароль
                         <input className='auth__input auth__input-password' id='password' name='password' type='password'
                             minLength='8'
                             placeholder='Введите пароль (мин. 8 символов)'
-                            value={formValue.password}
+                            value={values.password || ''}
                             onChange={handleChange}
-                            required />
-                        {errorMessages.password && <span className='auth__input-error'>{errorMessages.password}</span>}
+                            required
+                        />
+                        {errors.password && <span className='auth__input-error'>{errors.password}</span>}
                     </label>
                     <button className='auth__btn' type='submit'
-                        onSubmit={handleSubmit}>
+                        disabled={!isValid} >
                         Зарегистрироваться
                     </button>
                 </form>

@@ -91,14 +91,20 @@ function App() {
     setIsLoading(true);
     auth.registerUser(name, email, password)
       .then(() => {
-        handleLoginSubmit(email);
+        auth.loginUser(email, password)
+          .then(() => {
+            handleLoginSubmit(email);
+          })
+          .catch((loginErr) => {
+            console.log(loginErr);
+          });
       }).catch((err) => {
         setInfoTooltip(false);
         console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
   }
 
   const handleLoginSubmit = (email) => {

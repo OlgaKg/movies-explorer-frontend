@@ -1,59 +1,59 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { logout } from '../../utils/auth';
+import isEqual from 'lodash/isEqual';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Profile({onUpdateUser, setLoggedIn}) {
+function Profile({ onUpdateUser, setLoggedIn }) {
     const currentUser = useContext(CurrentUserContext);
     const user = currentUser;
 
+    const {
+        values: editedUser,
+        handleChange,
+        errors,
+        isValid,
+        resetForm,
+    } = useFormWithValidation();
+
     const [isEditing, setIsEditing] = useState(false);
-    const [editedUser, setEditedUser] = useState({ ...user });
-    const [error, setError] = useState(null);
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        resetForm({ ...user });
+    }, [user, resetForm]);
+
     const handleEditClick = () => {
-        setIsEditing(!isEditing);
-        setError(null);
+        setIsEditing(true);
     };
 
-    const handleSaveClick = async () => {
-        if (!editedUser.name || editedUser.name.length < 2) {
-            setError('Имя должно содержать минимум 2 символа');
-            return;
-        }
+    const isUnchanged = isEqual(editedUser, user);
 
-        if (!editedUser.email || !editedUser.email.includes('@')) {
-            setError('Неверный формат email');
+    const handleSaveClick = async () => {
+        if (!isValid || isUnchanged) {
             return;
         }
         try {
-            setError(null);
+            await onUpdateUser(editedUser);
             setIsEditing(false);
-            await onUpdateUser(editedUser); 
         } catch (error) {
-            setError('При обновлении профиля произошла ошибка.');
+            console.error('При обновлении профиля произошла ошибка.', error);
         }
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setEditedUser({ ...editedUser, [name]: value });
-        setError(null);
     };
 
     const signOut = () => {
         logout()
-          .then(() => {
-            setLoggedIn(false);
-            localStorage.removeItem('isLoggedIn'); 
-            navigate('/', { replace: true });
-          })
-          .catch((err) => {
-            console.error('Ошибка при выходе из аккаунта:', err);
-          });
-      };
+            .then(() => {
+                setLoggedIn(false);
+                localStorage.clear();
+                navigate('/', { replace: true });
+            })
+            .catch((err) => {
+                console.error('Ошибка при выходе из аккаунта:', err);
+            });
+    };
 
     return (
         <main className='main-account'>
@@ -63,37 +63,35 @@ function Profile({onUpdateUser, setLoggedIn}) {
                     <form className='profile__form' name='form-profile'>
                         <div className='profile__form-field'>
                             <span className='profile__form-label'>Имя</span>
-                            {isEditing ? (
-                                <>
-                                    <input
-                                        className='profile__form-input'
-                                        type='text'
-                                        name='name'
-                                        minLength='2'
-                                        placeholder='Введите имя'
-                                        value={editedUser.name}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </>
-                            ) : (
-                                <span className='profile__form-value'>{editedUser.name}</span>
+                            <input
+                                className='profile__form-input'
+                                type='text'
+                                name='name'
+                                minLength='2'
+                                placeholder='Введите имя'
+                                value={editedUser.name || ''}
+                                onChange={handleChange}
+                                required
+                                disabled={!isEditing}
+                            />
+                            {errors.name && isEditing && (
+                                <span className='profile__error'>{errors.name}</span>
                             )}
                         </div>
                         <div className='profile__form-field'>
                             <span className='profile__form-label'>Email</span>
-                            {isEditing ? (
-                                <input
-                                    className='profile__form-input'
-                                    type='email'
-                                    name='email'
-                                    placeholder='Введите email'
-                                    value={editedUser.email}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            ) : (
-                                <span className='profile__form-value'>{editedUser.email}</span>
+                            <input
+                                className='profile__form-input'
+                                type='email'
+                                name='email'
+                                placeholder='Введите email'
+                                value={editedUser.email || ''}
+                                onChange={handleChange}
+                                required
+                                disabled={!isEditing}
+                            />
+                            {errors.email && isEditing && (
+                                <span className='profile__error'>{errors.email}</span>
                             )}
                         </div>
                     </form>
@@ -101,12 +99,15 @@ function Profile({onUpdateUser, setLoggedIn}) {
                         {isEditing ? (
                             <>
                                 <div className='profile__error-container'>
-                                    {error && <div className='profile__error'>{error}</div>}
+                                    {errors.serverError && (
+                                        <div className='profile__error'>{errors.serverError}</div>
+                                    )}
                                 </div>
                                 <button
                                     onClick={handleSaveClick}
-                                    className={`profile__save-button ${error ? 'profile__save-button_disabled' : ''}`}
-                                    disabled={!!error}
+                                    className={`profile__save-button ${!isValid || isUnchanged ? 'profile__save-button_disabled' : ''
+                                        }`}
+                                    disabled={!isValid || isUnchanged}
                                 >
                                     Сохранить
                                 </button>
@@ -127,5 +128,6 @@ function Profile({onUpdateUser, setLoggedIn}) {
         </main>
     );
 }
+
 
 export default Profile;
