@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-// import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'; 
 
 function SearchForm({ shortFilm, handleCheckboxChange, setSearchMovie, searchMovie, storageKey }) {
     const [inputValue, setInputValue] = useState(searchMovie);

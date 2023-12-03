@@ -45,7 +45,6 @@
         margin: 11px auto 82px;
     }
     .movies-card-list__content {
-        /* max-width: 708px; */
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -60,7 +59,6 @@
     .movies-card-list__content {
         padding-top: 50px;
         margin: 0 auto;
-        /* max-width: 300px; */
     }
 
     .movies-card-list__load-more-btn {

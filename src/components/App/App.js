@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -23,7 +23,8 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isInfoTooltip, setInfoTooltip] = useState(false);
-  const [isRegisterPopupOpen, setRegisterPopupOpen] = useState(false);
+  const [isInfoPopupOpen, setInfoPopupOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,9 +77,10 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     if (isLoggedIn) {
-      mainApi.getSavedMovies()
+      mainApi
+        .getSavedMovies()
         .then((moviesData) => {
-          setSavedMovies(moviesData);
+          setSavedMovies(moviesData.reverse());
         })
         .catch(err => {
           console.error(err)
@@ -89,18 +91,23 @@ function App() {
 
   const handleRegisterSubmit = (name, email, password) => {
     setIsLoading(true);
+    setIsSubmitting(true);
     auth.registerUser(name, email, password)
       .then(() => {
         auth.loginUser(email, password)
           .then(() => {
             handleLoginSubmit(email);
           })
-          .catch((loginErr) => {
-            console.log(loginErr);
-          });
-      }).catch((err) => {
+          .catch((error) => {
+            console.error("Произошла ошибка при входе в аккаунт:", error);
+            setInfoPopupOpen(true);
+            setInfoTooltip(false);
+          })
+      }).catch((error) => {
+        console.error("Произошла ошибка при регистрации:", error);
+        setInfoPopupOpen(true);
         setInfoTooltip(false);
-        console.log(err);
+        setIsSubmitting(false);
       })
       .finally(() => {
         setIsLoading(false);
@@ -124,14 +131,15 @@ function App() {
     function makeRequest() {
       return mainApi.updateUserData(inputValues)
         .then((updatedUserData) => {
-          setRegisterPopupOpen(true);
+          setInfoPopupOpen(true);
           setCurrentUser(updatedUserData);
           setInfoTooltip(true);
         })
         .catch((error) => {
           console.error("Произошла ошибка при обновлении данных:", error);
+          setInfoPopupOpen(true);
           setInfoTooltip(false);
-        });
+        })
     }
     handleSubmit(makeRequest);
   }
@@ -158,7 +166,7 @@ function App() {
 
   function closePopup() {
     setIsLoading(false);
-    setRegisterPopupOpen(false)
+    setInfoPopupOpen(false)
   }
 
   return (
@@ -203,22 +211,34 @@ function App() {
                 onUpdateUser={handleUpdateUser}
                 setCurrentUser={setCurrentUser}
                 setLoggedIn={setLoggedIn}
+                isSubmitting={isSubmitting}
+                setIsSubmitting={setIsSubmitting}
               />
             } />
             <Route path='/signup'
-              element={<Register
-                handleRegisterSubmit={handleRegisterSubmit} />} />
+              element={
+                isLoggedIn ? <Navigate to='/' replace /> : (
+                  <Register
+                    handleRegisterSubmit={handleRegisterSubmit}
+                    isSubmitting={isSubmitting} />
+                )} />
             <Route path='/signin'
-              element={<Login
-                isLoggedIn={isLoggedIn}
-                handleLoginSubmit={handleLoginSubmit} />} />
+              element={
+                isLoggedIn ? <Navigate to='/' replace /> : (
+                  <Login
+                    isLoggedIn={isLoggedIn}
+                    handleLoginSubmit={handleLoginSubmit}
+                    setInfoPopupOpen={setInfoPopupOpen}
+                    isSubmitting={isSubmitting}
+                    setIsSubmitting={setIsSubmitting} />
+                )} />
             <Route path='*'
               element={<PageNotFound to='/signin' replace isLoggedIn={isLoggedIn} />} />
           </Routes >
           {routesWithFooter.includes(window.location.pathname) &&
             !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
           <InfoTooltip
-            isOpen={isRegisterPopupOpen}
+            isOpen={isInfoPopupOpen}
             registerStatus={isInfoTooltip}
             successMessage="Редактирование данных прошло успешно!"
             failureMessage="Что-то пошло не так! Попробуйте еще раз."

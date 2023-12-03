@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { emailRegex } from '../utils/constants';
 
 export function useFormWithValidation() {
   const [values, setValues] = useState({});
@@ -10,13 +11,13 @@ export function useFormWithValidation() {
     if (formValues.name && formValues.name.length < 2) {
       errors.name = 'Имя должно содержать минимум 2 символа';
     }
-    if (formValues.email && !formValues.email.includes('@')) {
+    if (formValues.email && !emailRegex.test(formValues.email)) {
       errors.email = 'Неверный формат email';
     }
     if (formValues.password && formValues.password.length < 8) {
       errors.password = 'Пароль должен содержать минимум 8 символов';
     }
-    
+
     return errors;
   }, []);
 

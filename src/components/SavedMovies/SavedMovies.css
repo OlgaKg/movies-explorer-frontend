@@ -10,14 +10,14 @@
 }
 
 .saved-movies__container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    display: grid;
+    justify-items: center;
     padding-top: 81px;
     border-top: 1px solid #E8E8E8;
     max-width: 1140px;
     margin: 0 auto;
     column-gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 @media screen and (max-width: 768px) {
@@ -27,9 +27,15 @@
     }
 
     .saved-movies__container {
-        max-width: 708px;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
+
+@media screen and (max-width: 480px) {
+    .saved-movies__container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 
 @media screen and (max-width: 320px) {
     .saved-movies {
@@ -43,6 +49,5 @@
     .saved-movies__container {
         padding-top: 50px;
         margin: 0 auto;
-        max-width: 300px;
     }
 }

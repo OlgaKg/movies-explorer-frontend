@@ -23,7 +23,7 @@ function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSav
     <article
       className='movies-card'
     >
-      <Link href={trailerLink} target='_blank' rel='noopener noreferrer'>
+      <Link to={trailerLink} target='_blank' rel='noopener noreferrer'>
         <img
           className='movies-card__image'
           src={typeof image === 'string' ? `${image}` : `${MOVIE_API_URL}${image.url}`}

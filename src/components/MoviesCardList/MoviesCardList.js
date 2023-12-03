@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-function MoviesCardList({ moviesCards, isSavedPage, savedMovies, handleMovieDelete, handleMovieSave, isConnectionError, isNotFoundMovies, isLoading }) {
+function MoviesCardList({ moviesCards, savedMovies, handleMovieDelete, handleMovieSave, isConnectionError, isNotFoundMovies, isLoading }) {
   const [cardsPerRow, setCardsPerRow] = useState(3);
   const [visibleMovies, setVisibleMovies] = useState(12);
 

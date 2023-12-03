@@ -5,7 +5,7 @@ import { logout } from '../../utils/auth';
 import isEqual from 'lodash/isEqual';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Profile({ onUpdateUser, setLoggedIn }) {
+function Profile({ onUpdateUser, setLoggedIn, isSubmitting, setIsSubmitting }) {
     const currentUser = useContext(CurrentUserContext);
     const user = currentUser;
 
@@ -44,14 +44,18 @@ function Profile({ onUpdateUser, setLoggedIn }) {
     };
 
     const signOut = () => {
+        setIsSubmitting(true);
         logout()
             .then(() => {
                 setLoggedIn(false);
                 localStorage.clear();
                 navigate('/', { replace: true });
             })
-            .catch((err) => {
-                console.error('Ошибка при выходе из аккаунта:', err);
+            .catch((error) => {
+                console.error('Ошибка при выходе из аккаунта:', error);
+            })
+            .finally(() => {
+                setIsSubmitting(false);
             });
     };
 
@@ -104,11 +108,10 @@ function Profile({ onUpdateUser, setLoggedIn }) {
                                     )}
                                 </div>
                                 <button
+                                    className={`profile__save-button 
+                                    ${!isValid || isUnchanged || isSubmitting ? 'profile__save-button_disabled' : ''}`}
                                     onClick={handleSaveClick}
-                                    className={`profile__save-button ${!isValid || isUnchanged ? 'profile__save-button_disabled' : ''
-                                        }`}
-                                    disabled={!isValid || isUnchanged}
-                                >
+                                    disabled={!isValid || isUnchanged || isSubmitting}>
                                     Сохранить
                                 </button>
                             </>
@@ -117,7 +120,10 @@ function Profile({ onUpdateUser, setLoggedIn }) {
                                 <button onClick={handleEditClick} className='profile__edit-button'>
                                     Редактировать
                                 </button>
-                                <button onClick={signOut} className='profile__logout-button'>
+                                <button
+                                    className='profile__logout-button'
+                                    onClick={signOut}
+                                    disabled={isSubmitting}>
                                     Выйти из аккаунта
                                 </button>
                             </>
@@ -128,6 +134,5 @@ function Profile({ onUpdateUser, setLoggedIn }) {
         </main>
     );
 }
-
 
 export default Profile;

@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Register({ handleRegisterSubmit }) {
+function Register({ handleRegisterSubmit, isSubmitting }) {
     const { values, handleChange, errors, isValid } = useFormWithValidation();
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const { name, email, password } = values;
 
-        handleRegisterSubmit(name, email, password);
+        handleRegisterSubmit(name, email, password)
     }
 
     return (
@@ -54,8 +54,10 @@ function Register({ handleRegisterSubmit }) {
                         />
                         {errors.password && <span className='auth__input-error'>{errors.password}</span>}
                     </label>
-                    <button className='auth__btn' type='submit'
-                        disabled={!isValid} >
+                    <button
+                        className='auth__btn'
+                        type='submit'
+                        disabled={!isValid || isSubmitting} >
                         Зарегистрироваться
                     </button>
                 </form>

@@ -4,13 +4,13 @@ import logo from '../../images/logo.svg';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import * as auth from '../../utils/auth';
 
-function Login({ handleLoginSubmit }) {
+function Login({ handleLoginSubmit, setInfoPopupOpen, isSubmitting, setIsSubmitting }) {
     const { values, handleChange, errors, isValid } = useFormWithValidation();
     const navigate = useNavigate();
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-
+        setIsSubmitting(true);
         auth.loginUser(values.email, values.password)
             .then(() => {
                 handleLoginSubmit(values.email);
@@ -18,6 +18,10 @@ function Login({ handleLoginSubmit }) {
             })
             .catch((err) => {
                 console.log(err);
+                setInfoPopupOpen(true);
+            })
+            .finally(() => {
+                setIsSubmitting(false);
             });
     };
 
@@ -63,7 +67,10 @@ function Login({ handleLoginSubmit }) {
                             />
                             {errors.password && <span className='auth__input-error'>{errors.password}</span>}
                         </label>
-                        <button className='auth__btn auth__btn-login' type='submit' disabled={!isValid}>
+                        <button
+                            className='auth__btn auth__btn-login'
+                            type='submit'
+                            disabled={!isValid || isSubmitting}>
                             Войти
                         </button>
                     </form>
