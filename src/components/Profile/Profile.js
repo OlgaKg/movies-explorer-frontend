@@ -15,7 +15,7 @@ function Profile({ onUpdateUser, setLoggedIn, isSubmitting, setIsSubmitting }) {
         errors,
         isValid,
         resetForm,
-    } = useFormWithValidation();
+    } = useFormWithValidation(setIsSubmitting);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -23,7 +23,7 @@ function Profile({ onUpdateUser, setLoggedIn, isSubmitting, setIsSubmitting }) {
 
     useEffect(() => {
         resetForm({ ...user });
-    }, [user, resetForm]);
+    }, [user, resetForm, currentUser]);
 
     const handleEditClick = () => {
         setIsEditing(true);

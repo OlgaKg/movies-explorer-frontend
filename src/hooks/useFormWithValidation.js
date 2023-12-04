@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { EMAIL_REGEX } from '../utils/constants';
 
-export function useFormWithValidation() {
+export function useFormWithValidation(setIsSubmitting) {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -38,7 +38,10 @@ export function useFormWithValidation() {
     setValues(newValues);
     setErrors(newErrors);
     setIsValid(newIsValid);
-  }, []);
+    if (setIsSubmitting) {
+      setIsSubmitting(false);
+    }
+  }, [setIsSubmitting]);
 
   return { values, handleChange, errors, isValid, resetForm };
 }

@@ -7,7 +7,7 @@ import { filterMovies } from '../../utils/filterMovies';
 
 function SavedMovies({ handleMovieDelete, savedMovies, isLoading }) {
   const [filteredMovies, setFilteredMovies] = useState(savedMovies);
-  const [searchMovie, setSearchMovie] = useState(localStorage.getItem('searchMoviesSavedString') || '');
+  const [searchMovie, setSearchMovie] = useState('');
   const [shortFilm, setShortFilm] = useState(false);
   const [isNotFoundMovies, setIsNotFoundMovies] = useState(false);
 

@@ -99,8 +99,6 @@ function App() {
           })
           .catch((error) => {
             console.error("Произошла ошибка при входе в аккаунт:", error);
-            setInfoPopupOpen(true);
-            setInfoTooltip(false);
           })
       }).catch((error) => {
         console.error("Произошла ошибка при регистрации:", error);
