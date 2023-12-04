@@ -22,12 +22,11 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
       return;
     }
     setIsLoading(true);
-  
+
     const cachedMovies = JSON.parse(localStorage.getItem('cachedMovies'));
-  
+
     if (cachedMovies) {
       const filteredMovies = filterMovies(cachedMovies, searchMovie, isShortMovie);
-  
       setMovies(filteredMovies);
       setConnectionError(false);
       setIsLoading(false);
@@ -35,10 +34,9 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
       getMovies()
         .then((apiMovies) => {
           const filteredApiMovies = filterMovies(apiMovies, searchMovie, isShortMovie);
-  
           setMovies(filteredApiMovies);
           setConnectionError(false);
-          localStorage.setItem('cachedMovies', JSON.stringify(filteredApiMovies));
+          localStorage.setItem('cachedMovies', JSON.stringify(apiMovies));
         })
         .catch((err) => {
           console.error(err);
@@ -52,12 +50,18 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
 
   useEffect(() => {
     handleGetFilteredMovies();
-  }, [handleGetFilteredMovies]);
+  }, [handleGetFilteredMovies, searchMovie, isShortMovie]);
 
   const handleCheckboxChange = () => {
     const newValue = !isShortMovie;
     setIsShortMovie(newValue);
     saveCheckboxState(newValue);
+    handleGetFilteredMovies();
+  };
+
+  const handleSearchFormSubmit = (e) => {
+    e.preventDefault();
+    handleGetFilteredMovies();
   };
 
   return (
@@ -69,6 +73,7 @@ function Movies({ savedMovies, handleMovieDelete, handleMovieSave }) {
           searchMovie={searchMovie}
           shortFilm={isShortMovie}
           storageKey="searchMovieString"
+          onSubmit={handleSearchFormSubmit}
         />
         {isLoading && <Preloader />}
         <MoviesCardList
