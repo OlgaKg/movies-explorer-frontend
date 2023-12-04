@@ -16,6 +16,7 @@ import { AppContext } from '../../contexts/AppContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
+import { ROUTES_WITH_FOOTER, EXCLUDE_FOOTER_ROUTES } from '../../utils/constants';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -30,9 +31,7 @@ function App() {
   const location = useLocation();
 
   const currentPage = location.pathname;
-  const routesWithFooter = ['/', '/movies', '/saved-movies'];
-  const excludeFooterRoutes = ['/signin', '/signup', '*'];
-  const isExcludedFromFooter = excludeFooterRoutes.includes(currentPage);
+  const isExcludedFromFooter = EXCLUDE_FOOTER_ROUTES.includes(currentPage);
 
   function checkToken() {
     setIsLoading(true);
@@ -235,8 +234,8 @@ function App() {
             <Route path='*'
               element={<PageNotFound to='/signin' replace isLoggedIn={isLoggedIn} />} />
           </Routes >
-          {routesWithFooter.includes(window.location.pathname) &&
-            !excludeFooterRoutes.includes(window.location.pathname) && <Footer />}
+          {ROUTES_WITH_FOOTER.includes(window.location.pathname) &&
+            !EXCLUDE_FOOTER_ROUTES.includes(window.location.pathname) && <Footer />}
           <InfoTooltip
             isOpen={isInfoPopupOpen}
             registerStatus={isInfoTooltip}

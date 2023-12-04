@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { DESKTOP_VW, TABLET_VW, MOBILE_VW } from '../../utils/constants';
 
 function MoviesCardList({ moviesCards, savedMovies, handleMovieDelete, handleMovieSave, isConnectionError, isNotFoundMovies, isLoading }) {
   const [cardsPerRow, setCardsPerRow] = useState(3);
@@ -14,13 +15,13 @@ function MoviesCardList({ moviesCards, savedMovies, handleMovieDelete, handleMov
     function handleResize() {
       const windowWidth = window.innerWidth;
 
-      if (windowWidth >= 1280) {
+      if (windowWidth >= DESKTOP_VW) {
         setCardsPerRow(3);
         setVisibleMovies(12);
-      } else if (windowWidth >= 768) {
+      } else if (windowWidth >= TABLET_VW) {
         setCardsPerRow(2);
         setVisibleMovies(8);
-      } else if (windowWidth >= 320) {
+      } else if (windowWidth >= MOBILE_VW) {
         setCardsPerRow(2);
         setVisibleMovies(5);
       }
