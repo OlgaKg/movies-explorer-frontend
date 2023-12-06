@@ -1,51 +1,56 @@
-import React, { useState } from 'react';
-import { useSavedMovies } from '../../contexts/SavedMoviesContext';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function MoviesCard({ movie, isSavedPage }) {
-  const { savedMovies, addMovieToSaved, removeMovieFromSaved } = useSavedMovies();
-  const isSaved = savedMovies.some(savedMovie => savedMovie.id === movie.id);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleSaveClick = () => {
-    if (!isSaved) {
-      addMovieToSaved(movie);
+const formatDuration = (minutes) => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  if (hours > 0) {
+    if (remainingMinutes > 0) {
+      return `${hours}ч ${remainingMinutes}м`;
     } else {
-      removeMovieFromSaved(movie.id);
+      return `${hours}ч`;
     }
-  };
+  } else {
+    return `${minutes}м`;
+  }
+};
+
+function MoviesCard({ moviesCard, isSavedPage, handleMovieDelete, handleMovieSave, savedMovies }) {
+  const { nameRU, nameEN, duration, image, trailerLink } = moviesCard;
+  const MOVIE_API_URL = 'https://api.nomoreparties.co';
 
   return (
     <article
       className='movies-card'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <img className='movies-card__image' key={movie.id} src={movie.image} alt={`${movie.name}`} />
+      <Link to={trailerLink} target='_blank' rel='noopener noreferrer'>
+        <img
+          className='movies-card__image'
+          src={typeof image === 'string' ? `${image}` : `${MOVIE_API_URL}${image.url}`}
+          alt={`${nameRU} (${nameEN})`}
+        />
+      </Link>
       {isSavedPage ? (
-        isHovered ? (
-          <button className='movies-card__remove-button' onClick={handleSaveClick}>&#215;</button>
-        ) : (
-          ''
-        )
+        <button
+          className={`movies-card__remove-button ${window.location.pathname === '/movies' ? 'active' : ''}`}
+          onClick={() => handleMovieDelete(moviesCard._id ? moviesCard : savedMovies.find(item => moviesCard.id === item.movieId))}
+        >
+          {window.location.pathname === '/movies' ? <div className='movies-card__saved-icon'>&#10003;</div> : <>&#215;</>}
+        </button>
       ) : (
         <button
-          className={`movies-card__save-button ${isSaved ? 'movies-card__save-button_saved' : ''}`}
-          onClick={handleSaveClick}
+          className={`movies-card__save-button`}
+          onClick={() => handleMovieSave(moviesCard)}
         >
-          {isSaved ? (
-            <div className='movies-card__saved-icon'>&#10003;</div>
-          ) : (
-            <div className='movies-card__save-btn'>Сохранить</div>
-          )}
+          <div className='movies-card__save-btn'>Сохранить</div>
         </button>
       )}
       <div className='movies-card__info'>
-        <h2 className='movies-card__title'>{movie.name}</h2>
-        <p className='movies-card__duration'>{movie.duration}</p>
+        <h2 className='movies-card__title'>{nameRU}</h2>
+        <p className='movies-card__duration'>{formatDuration(duration)}</p>
       </div>
     </article>
   );
 }
-
 
 export default MoviesCard;

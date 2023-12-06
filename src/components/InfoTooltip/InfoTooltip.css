@@ -1,0 +1,130 @@
+.popup {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0, .5);
+    z-index: 2;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .6s, opacity .6s ease-in-out;
+}
+
+.popup_opened {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup__container-register {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, .15);
+    border-radius: 10px;
+    position: relative;
+    padding: 0 18px;
+}
+
+.popup__closed-btn {
+    border-style: none;
+    padding: 0;
+    background-image: url(../../../src/images/CloseIcon.svg);
+    background-color: rgb(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    position: absolute;
+    transition: .4s linear;
+}
+
+.popup__closed-btn:hover {
+    opacity: .6;
+}
+
+.popup__registerStatus_fail {
+    background-image: url(../../images/Union_fail.svg);
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 120px;
+    margin: 60px auto -3px;
+}
+
+.popup__registerStatus_success {
+    background-image: url(../../images/Union_succes.svg);
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 120px;
+    margin: 60px auto -3px;
+}
+
+.popup__title {
+    font-weight: 900;
+    color: #000;
+    text-align: left;
+}
+
+.popup__title_register {
+    text-align: center;
+    margin: 0 auto;
+   
+}
+
+@media (min-width: 320px) {
+    .popup__container-register {
+        max-width: 320px;
+        max-height: 568px;
+    }
+
+    .popup__closed-btn {
+        width: 20px;
+        height: 20px;
+        top: -36px;
+        right: 0;
+    }
+
+    .popup__title {
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: 25px;
+        margin-bottom: 68px;
+    }
+
+    .popup__title_register {
+        max-width: 244px;
+        margin-bottom: 50px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .popup__container-register {
+        max-width: 430px;
+        max-height: 330px;
+    }
+
+    .popup__closed-btn {
+        width: 32px;
+        height: 32px;
+        top: -40px;
+        right: -40px;
+    }
+
+    .popup__title {
+        font-size: 24px;
+        line-height: 29px;
+        margin-top: 34px;
+        margin-bottom: 41px;
+    }
+
+    .popup__title_register {
+        max-width: 358px;
+        margin-bottom: 60px;
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
+function Navigation({ isLoggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
   const location = useLocation();
 
   const hideNavigationOnPaths = ['/profile', '/signin', '/signup', '*'];
@@ -12,16 +12,9 @@ function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
     return null;
   }
 
-  // const shouldHideNavigation = !loggedIn && window.innerWidth > 768;
-
-  // if (shouldHideNavigation) {
-  //   console.log(shouldHideNavigation)
-  //   return null;
-  // }
-
   return (
     <nav className={`navigation ${isHidden || (isMobile && !isMenuOpen) || isAuthPage ? 'hidden' : ''}`}>
-      {loggedIn && (
+      {isLoggedIn && (
         <div className='navigation__menu'>
           <div className='navigation__links'>
             {isMobile && isMenuOpen && (
@@ -42,7 +35,7 @@ function Navigation({ loggedIn, isMobile, isMenuOpen, closeMenu, isAuthPage }) {
           </Link>
         </div>
       )}
-      {loggedIn && isMobile && !isAuthPage && !isMenuOpen && (
+      {isLoggedIn && isMobile && !isAuthPage && !isMenuOpen && (
         <Link to='/' className={`navigation__link ${isActive('/') ? 'active-link' : ''}`}>
           Главная
         </Link>

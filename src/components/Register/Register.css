@@ -78,8 +78,14 @@
     transition: opacity .3s ease-in-out;
 }
 
-.auth__btn:hover {
+.auth__btn:not([disabled]):hover {
     opacity: .8;
+}
+
+.auth__btn[disabled] {
+    background: #F8F8F8;
+    color: #C2C2C2;
+    cursor: default;
 }
 
 .auth__signin {

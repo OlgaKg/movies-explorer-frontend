@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import Navigation from '../Navigation/Navigation';
 
-function Header({ loggedIn }) {
+function Header({ isLoggedIn }) {
     const location = useLocation();
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -12,8 +12,8 @@ function Header({ loggedIn }) {
     let isAuthPage = currentPage === 'signin' || currentPage === 'signup';
 
     const isHomePage = location.pathname === '/';
-    const showBurgerMenu = loggedIn && isMobile;
-    const showNavigation = loggedIn && !isAuthPage && !['/signin', '/signup'].includes(location.pathname);
+    const showBurgerMenu = isLoggedIn && isMobile;
+    const showNavigation = isLoggedIn && !isAuthPage && !['/signin', '/signup'].includes(location.pathname);
     const is404Page = !['/', '/movies', '/saved-movies', '/profile', '/signin', '/signup'].includes(location.pathname);
 
     const headerClasses = [
@@ -65,7 +65,7 @@ function Header({ loggedIn }) {
                         </button>
                         <div className={`burger-menu-container ${isMenuOpen ? 'open' : ''}`}>
                             <Navigation
-                                loggedIn={loggedIn}
+                                isLoggedIn={isLoggedIn}
                                 isMobile={isMobile}
                                 isMenuOpen={isMenuOpen}
                                 closeMenu={closeMenu}
@@ -76,7 +76,7 @@ function Header({ loggedIn }) {
                 ) : (
                     showNavigation ? (
                         <Navigation
-                            loggedIn={loggedIn}
+                            isLoggedIn={isLoggedIn}
                             isMobile={isMobile}
                             isMenuOpen={isMenuOpen}
                             closeMenu={closeMenu}
